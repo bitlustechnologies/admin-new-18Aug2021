@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-body">
+            <form #userForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="CreateSubAdminUser(userForm)">
+                <div class="form-group">
+                    <label>First Name</label><br />
+                    <input autocomplete="off" id="userName" value="" name="first_name" class="form-control" required  [(ngModel)]="adminUserModel.userFName" #userName="ngModel" style="width: 295px;" >
+                    <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="alert alert-danger"  style="width: 295px;">
+                        <div *ngIf="userName.errors.required">First Name is required. </div> 
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label>Last Name</label><br />
+                    <input autocomplete="off" id="userLName" value="" name="last_name" class="form-control" required  [(ngModel)]="adminUserModel.userLName" #userLName="ngModel" style="width: 295px;" >
+                    <div *ngIf="userLName.invalid && (userLName.dirty || userLName.touched)" class="alert alert-danger"  style="width: 295px;">
+                        <div *ngIf="userLName.errors.required">Last Name is required. </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email</label><br />
+                    <input autocomplete="off" type="text" [email]="adminUserModel.userEmail!==''" id="userEmail" name="email" required [(ngModel)]="adminUserModel.userEmail" #userEmail="ngModel" class="form-control" style="width: 295px;">
+                     <div *ngIf="userEmail.errors?.required &&  userEmail.touched" class="alert alert-danger"  style="width: 295px;"> Email is required. </div>
+                     <div *ngIf="userEmail.errors?.email && userEmail.touched" class="alert alert-danger"  style="width: 295px;"> Email is invalid. </div>
+                </div>
+                
+                <div class="form-group row p-t-20">
+                    <div class="col-sm-12">
+                        <label><strong>Select Permissions:</strong></label><br />
+                        <div class="custom-control custom-checkbox" *ngFor="let pmenu of parentmenu">
+                            <div>
+                                <input autocomplete="off" #check class="custom-control-input" id="menu_{{pmenu.access_name}}" [value]="pmenu.access_name" #menus ="ngModel" ngModel name="menus[]" type="checkbox"  (click)="onChangeCategory($event, pmenu.access_name)">
+                                <label class="custom-control-label" for="menu_{{pmenu.access_name}}">
+                                    {{pmenu.access_name}}
+                                </label>
+                            </div>
+                            <div class="col-sm-12" id="submenu_{{pmenu.access_name}}" >
+                                <div class="col-sm-3" *ngFor="let cmenu of childmenu[pmenu.access_id]">
+                                    <input autocomplete="off" #check class="custom-control-input" id="{{cmenu.access_name}}" [value]="cmenu.access_name" #cmenus ="ngModel" ngModel name="menus[cmenu.parent][]" type="checkbox"  (click)="onChangeSubmenu($event,pmenu.access_name, cmenu.access_name)">
+                                    <label class="custom-control-label" for="{{cmenu.access_name}}">
+                                        {{cmenu.access_name}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-danger" [disabled]="userForm.invalid">Submit</button>
+                <button type="button" class="btn btn-inverse" [routerLink]="['/sub-admin-management/sub-admin-users']" style="margin-left:10px;">Back</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+<!-- Row -->

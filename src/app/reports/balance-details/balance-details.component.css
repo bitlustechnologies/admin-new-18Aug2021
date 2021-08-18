@@ -1,0 +1,11 @@
+.table tr th { 
+   font-size: 14px !important;
+
+}
+table thead th{
+    vertical-align: top;
+}
+.updateBtn{
+    float: right;
+    margin-bottom: 15px;
+}

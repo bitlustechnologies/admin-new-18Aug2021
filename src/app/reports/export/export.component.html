@@ -1,0 +1,29 @@
+
+    <div class="card">
+        <form [formGroup]="searchForm" class="form-horizontal m-t-30 filterSearchForm" (ngSubmit)="FilterDeposits(searchForm)">
+            <div class="col" >
+                <ul class="top_filters">
+                    <li class="date">
+                        <label>From</label>
+                        <input  placeholder="FromDate" type="date" name="fromDate" formControlName="fromDate" style="width:75%" class="form-control"  >
+                    </li>
+                    <li class="date">
+                        <label>To</label>
+                        <input autocomplete="off"  placeholder="ToDate" id="ToDate" formControlName="toDate" type="date"  name="toDate" style="width:75%" class="form-control date">
+                    </li>
+                    
+                </ul>  
+            </div>
+            <div class="col">
+                <ul class="top_filters">
+                    <li>
+                        <label class="p-b-10">Download XLSX File&nbsp;</label>
+                        <button type="submit" style="padding: 7px 12px !important;" class="btn btn-secondary">Export</button>
+                    </li>
+                </ul> 
+            </div>
+        </form>
+    </div>
+    <!-- <button (click)="saveFile()" style="padding: 7px 12px !important;" class="btn btn-secondary">Export</button> -->
+
+

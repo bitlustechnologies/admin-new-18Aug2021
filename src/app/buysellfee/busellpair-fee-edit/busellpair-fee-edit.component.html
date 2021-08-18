@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-sm-12">
+      <div class="card card-body">
+          <form #editForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="UpdateUser(editForm)">
+              <!-- <div class="form-group">
+                  <label>Buy/Sell</label><br />
+                  <select class="form-control custom-select" style="width: 295px;"  name="orderType" [(ngModel)]="BuySellPairEditModel.orderType" (change)="onChange($event.target.value)">
+                      <option value="BUY">Buy</option>
+                      <option value="SELL">Sell</option>
+                    </select>
+              </div> -->
+              <div class="form-group">
+                <label>Type</label><br />
+                <select (change)="changeType()"  name="type" class="form-control" required  [(ngModel)]="typetext" #type="ngModel" appTwoDecimalDirective style="width: 295px;">
+
+                    <option value="buy">Buy</option>
+                    <option value="sell">Sell</option>
+                </select>    
+                <div *ngIf="typetext.invalid && (typetext.dirty || typetext.touched)" class="alert alert-danger" style="width: 295px;">
+                    <div *ngIf="typetext.errors.required"> Fee Type is required. </div>
+                </div>
+            </div>
+
+              <div class="form-group">
+                  <label>Fee</label><br />
+                  <input autocomplete="off" id="fee" name="fee" class="form-control" required  [(ngModel)]="BuySellPairEditModel.fee" #fee="ngModel" style="width: 295px;">
+                  <div *ngIf="fee.invalid && (fee.dirty || fee.touched)" class="alert alert-danger" style="width: 295px;">
+                      <div *ngIf="fee.errors.required"> Fee is required. </div>
+                  </div>
+              </div>
+       
+              <div class="form-group">
+                  <label>Order Limit</label><br />
+                  <input autocomplete="off" type="textbox" name="orderLimit" class="form-control" required  [(ngModel)]="BuySellPairEditModel.orderLimit" #orderLimit="ngModel" appTwoDecimalDirective style="width: 295px;">
+                  <div *ngIf="orderLimit.invalid && (orderLimit.dirty || orderLimit.touched)" class="alert alert-danger" style="width: 295px;">
+                      <div *ngIf="orderLimit.errors.required"> Order Limit is required. </div>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label>Fee Type</label><br />
+                <select  name="feeType" class="form-control" required  [(ngModel)]="BuySellPairEditModel.feeType" #feeType="ngModel" appTwoDecimalDirective style="width: 295px;">
+
+                    <option value="percentage">Percentage</option>
+                    <option value="amount">Amount</option>
+                </select>    
+                <div *ngIf="feeType.invalid && (feeType.dirty || feeType.touched)" class="alert alert-danger" style="width: 295px;">
+                    <div *ngIf="feeType.errors.required"> Fee Type is required. </div>
+                </div>
+            </div>
+
+
+             <button type="submit" class="btn btn-danger" [disabled]="editForm.invalid">Update</button>
+              <button type="button" class="btn btn-inverse" [routerLink]="['/buysell-fee']" style="margin-left:10px;">Cancel</button>
+          </form>
+      </div>
+  </div>
+</div>
+<!-- /.row -->
+<!-- Row -->

@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card card-body">
+      <form #editForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="UpdateCurrencyDetail(editForm)">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Currency Name</label><br />
+              <p>{{currencyDetail.currency_name}}</p>
+              <input autocomplete="off" type="hidden" id="currencyName" name="currencyName" class="form-control" [(ngModel)]="currencyDetail.currency_name" #currencyName="ngModel" >
+              <!-- <input id="currencyName" minlength="2" maxlength="50" name="currencyName" class="form-control" required  [(ngModel)]="currencyDetail.currency_name" #currencyName="ngModel" >
+              <div *ngIf="currencyName.invalid && (currencyName.dirty || currencyName.touched)" class="alert alert-danger" >
+                <div *ngIf="currencyName.errors.required"> Currency Name is required. </div>
+                <div *ngIf = "currencyName.errors.minlength" > Minimum {{currencyName.errors.minlength.requiredLength}} characters are required</div>
+              </div> -->
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label>Currency Sign</label><br />
+              <p>{{currencyDetail.sign}}</p>
+              <input autocomplete="off" type="hidden" id="currencySign" name="currencySign" class="form-control" [(ngModel)]="currencyDetail.sign" #currencySign="ngModel">
+              <!-- <input id="currencySign" name="currencySign" class="form-control" required  [(ngModel)]="currencyDetail.sign" #currencySign="ngModel">
+              <div *ngIf="currencySign.invalid && (currencySign.dirty || currencySign.touched)" class="alert alert-danger">
+                <div *ngIf="currencySign.errors.required"> Currency sign is required. </div>
+                <div *ngIf = "currencySign.errors.minlength" > Minimum {{currencySign.errors.minlength.requiredLength}} characters are required</div>
+              </div> -->
+            </div>
+          </div> 
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+                <label for="">Upload Icon (png,jpeg)</label>
+                <input autocomplete="off" id="currency_icon"  name = "currency_icon" type="file" (change)="upload($event)" class="form-control uploadBtn" placeholder="Upload">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+                <img  *ngIf="currencyDetail.icon" [src]="currencyDetail.icon" width="50">
+            </div>
+        </div> 
+        </div>
+        <button type="submit" class="btn btn-danger" [disabled]="editForm.invalid" >Update</button>
+        <button type="button" class="btn btn-inverse" [routerLink]="['/currency-management/currency-symbols']" style="margin-left:10px;">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>  

@@ -1,0 +1,84 @@
+<div class="row">
+  <!-- column -->
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <div class="col" style="margin-bottom: 30px;">
+            <button type="button" class="btn btn-secondary" style="height: 36px;width: 97px;" [routerLink]="['/sub-admin-management/sub-admin-new']"> Add New </button>
+          </div>
+          <div class="col" style="margin-bottom: 10px;">
+          </div>
+        </div>    
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th style="padding-left:96px;">Action</th>
+            </tr>
+          </thead>
+          <tbody  *ngIf="!empty">
+            <tr *ngFor="let list of userList| paginate: { itemsPerPage: 10, currentPage: pageNo ,totalItems:totalRecords};let i =index">
+              <td>{{(i + 1) + (pageNo * 10) - 10 }}</td>
+              <td> {{list.first_name}} {{list.last_name}}</td>
+              <td>{{list.email}}</td>
+              <td>
+                <a (click)="open(list.member_id,list.sub_admin_status)" ><i class='{{ (list.sub_admin_status == 1) ? "fa fa-unlock" : "fa fa-lock" }}'></i></a>|
+                <a [routerLink]="['/sub-admin-management/sub-admin-edit/',list.member_id]"> <i class="mdi mdi-grease-pencil"> </i></a>|
+                <a target="_blank" (click)="open2(delete)"> <i style="color: #c51818;" class="fa fa-trash-o"> </i></a>
+                
+              </td>
+              <ng-template #delete let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <h4 class="modal-title">Delete Sub Admin</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Do you want to delete sub admin ?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" style="cursor: pointer" (click)="deleteMember(list.member_id)" class="btn btn-secondary" >Yes</button>
+                  <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                </div>
+              </ng-template>
+            </tr>
+          </tbody>
+          <tbody *ngIf="empty">
+            <tr >
+              <td colspan="3">No Record found</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pull-right" *ngIf="!empty">
+          <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <!-- <h4 class="modal-title" id="modal-basic-title">Profile update</h4> -->
+      <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <!-- <label for="dateOfBirth">Date of birth</label> -->
+          <div class="input-group">
+            
+            <h5>{{memberStatus==1?'Do you really want to lock this User?':'Do you really want to unlock this User?'}}</h5>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="lockSubAdmin()">Yes</button>
+    </div>
+  </ng-template>

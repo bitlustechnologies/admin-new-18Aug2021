@@ -1,0 +1,48 @@
+<div class="row">
+    <!-- column -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="trade_filter_sec">
+              
+                <div class="col" style="margin-bottom: 10px;">
+                            <a style="cursor:pointer"  (click)="DownloadCSV()"> <i class="mdi mdi-arrow-down-box pointer"> </i>Download CSV file</a>
+                   </div>
+                </div>
+                
+                  <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Pair</th>
+                            <th>Trade</th>
+                            <th>Volume</th>
+                            <th>Average Price</th>
+                            <th>Max Price</th>
+                            <th>Min Price</th>
+                            <!-- <th>Total Fees</th> -->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let list of tradeSummaryList">
+                            <td>{{list.pair}} </td>
+                            <td>{{list.tradeCount}}</td>
+                            <td> {{list.volumes}}</td>
+                            <td> {{list.avgPrice}}</td>
+                            <td> {{list.maxPrice}}</td>
+                            <td> {{list.minPrice}}</td>
+                            <!-- <td> {{list.totalFees}}</td> -->
+                          </tr>
+        
+                          <tr *ngIf="empty">
+                            <td colspan="3">No Record found</td>
+                          </tr>
+                        </tbody>
+        
+                      </table>
+                 
+            </div>
+        </div>
+    </div>
+  
+  </div>
+  

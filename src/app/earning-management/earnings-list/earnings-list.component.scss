@@ -1,0 +1,32 @@
+
+.list-p-position {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding-bottom: 0;
+}
+.list-p-position .col {
+    padding: 0;
+}
+.list-p-position .col label {
+    margin-bottom: 0;
+}
+.card {
+    .card-body {
+        .nav {
+            .nav-item {
+                .nav-link {
+                    border-radius: 0px;
+                    border-color: #e9ecef #e9ecef #dee2e6;
+                    color: #555;
+                    &.active {                        
+                        background-color: #e8b342;
+                        color: #fff;
+                        border-color: #e8b342;
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+<!-- <div class="row">
+    <div class="col-sm-12">
+        <div class="card card-body">
+            <form #editForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="UpdateUser(editForm)">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input id="name" name="name" class="form-control" required  [(ngModel)]="editUser.name" #name="ngModel">
+                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                        <div *ngIf="name.errors.required"> Name is required. </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" [email]="editUser.email!==''" id="email" name="email" required [(ngModel)]="editUser.email" #email="ngModel" class="form-control">
+                     <div *ngIf="email.errors?.required &&  email.touched" class="alert alert-danger"> Email is required. </div>
+                     <div *ngIf="email.errors?.email && email.touched" class="alert alert-danger"> Email is invalid. </div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input id="password" name="password"  type="password" class="form-control" required  [(ngModel)]="editUser.password" #password="ngModel">
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                        <div *ngIf="password.errors.required"> Password is required. </div>
+                    </div>
+                </div>
+           
+                <div class="form-group row p-t-20">
+                    <div class="col-sm-4">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="comission" [(ngModel)]="editUser.comission" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Comission Section</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="limit" [(ngModel)]="editUser.limit" id="customCheck2">
+                            <label class="custom-control-label" for="customCheck2">Limit Management</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="fund" [(ngModel)]="editUser.fund" id="customCheck3">
+                            <label class="custom-control-label" for="customCheck3">Fund Transaction</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-danger" [disabled]="editForm.invalid">Update</button>
+                <button type="button" class="btn btn-inverse" [routerLink]="['/sub-admin-management/sub-admin-users']" style="margin-left:10px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+  </div>
+
+   -->

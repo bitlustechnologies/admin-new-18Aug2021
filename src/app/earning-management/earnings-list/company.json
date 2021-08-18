@@ -1,0 +1,33 @@
+[
+    {
+        "currency":"BTC",
+        "total": "3000",
+        "withdraw":"1000",
+        "pending":"2000"
+    },
+    {
+        "currency":"LTC",
+        "total": "4000",
+        "withdraw":"1000",
+        "pending":"3000"
+    },
+    {
+        "currency":"BCH",
+        "total": "3000",
+        "withdraw":"1000",
+        "pending":"2000"
+    },
+    {
+        "currency":"ETH",
+        "total": "3000",
+        "withdraw":"1000",
+        "pending":"2000"
+    },
+    {
+        "currency":"XRP",
+        "total": "3000",
+        "withdraw":"1000",
+        "pending":"2000"
+    }
+    
+]

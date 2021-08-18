@@ -1,0 +1,256 @@
+<div class="row">
+    <div class="card" style="width:100%">
+        <div class="card-body liquidity_management">
+            <ngb-tabset>
+                <ngb-tab title="Withdraw">
+                    <ng-template ngbTabContent>
+                        <div class="card-body col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <form #exchangeForm="ngForm" class="form-horizontal"
+                                        (ngSubmit)="AddExchangeDetail(exchangeForm)">
+                                        <h3>ADD EXCHANGE DETAILS</h3><br />
+                                        <div class="form-group">
+                                            <label>EXCHANGE</label><br />
+                                            <input readonly class="form-control" required style="width:416px"
+                                                value="FTX">
+
+                                            <!-- <label>SELECT EXCHANGE</label><br />
+                                            <select class="form-control custom-select"  name="exchange" [(ngModel)]="liquidityModel.exchange" style="width:416px" (change)="getExchangeDetails()">
+                                                <option selected="">-Select-</option>  
+                                                <option *ngFor=" let ex of exchangesList" [value]="ex.id">{{ex.name}}</option>
+                                            </select> -->
+                                        </div>
+
+                                        <!-- <div class="form-group">
+                                            <label>EXCHANGE LABEL</label><br />
+                                            <input id="exchangeLabel" name="exchangeLabel" class="form-control" required  [(ngModel)]="liquidityModel.exchangeLabel" #exchangeLabel="ngModel" style="width:416px">
+                                            <div *ngIf="exchangeLabel.invalid && (exchangeLabel.dirty || exchangeLabel.touched)" class="alert alert-danger" style="width:416px">
+                                                <div *ngIf="exchangeLabel.errors.required"> Label is required. </div>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- <div class="form-group">
+                                            <label>API KEY</label><br />
+                                            <input id="apiKey" name="apiKey" class="form-control" required  [(ngModel)]="liquidityModel.apiKey" #apiKey="ngModel" style="width:416px">
+                                            <div *ngIf="apiKey.invalid && (apiKey.dirty || apiKey.touched)" class="alert alert-danger" style="width:416px">
+                                                <div *ngIf="apiKey.errors.required"> API Key is required. </div>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- <div class="form-group">
+                                            <label>SECRET KEY</label><br />
+                                            <input id="secretKey" name="secretKey" class="form-control" required  [(ngModel)]="liquidityModel.secretKey" #secretKey="ngModel" style="width:416px">
+                                            <div *ngIf="secretKey.invalid && (secretKey.dirty || secretKey.touched)" class="alert alert-danger" style="width:416px">
+                                                <div *ngIf="secretKey.errors.required"> Secret Key is required. </div>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" 
+                                                [checked]="liquidityModel.makeitDefault== 'true'"
+                                                name="makeitDefault" [(ngModel)]="liquidityModel.makeitDefault" id="customCheck1">
+                                                <label class="custom-control-label" for="customCheck1">Make it Default</label>
+                                            </div>
+                                        </div> -->
+
+
+                                        <!-- <div *ngIf="!emptyAddress">
+                                            <div *ngFor="let arr of currencyAddress" class="form-group" >
+                                                <label>{{arr.currency_master.currency_symbol | uppercase}} ADDRESS</label><br />
+                                                <input  disabled="disabled"  class="form-control" [value]="arr.address"  style="width:416px">
+                                                
+                                            </div>
+                                        </div> -->
+
+
+                                        <!-- old comment <div class="form-group" *ngIf="liquidityModel.ethAddress">
+                                            <label>ETH ADDRESS</label><br />
+                                            <input id="ethAddress" disabled="disabled" name="ethAddress" class="form-control" required  [(ngModel)]="liquidityModel.ethAddress" #ethAddress="ngModel" style="width:416px">
+                                        </div> -->
+                                        <!-- <button type="submit" class="btn btn-danger" [disabled]="exchangeForm.invalid">Submit</button> -->
+                                    </form>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <h3>ORDER PLACEMENT SETTING ON EXCHANGE</h3><br />
+                                    <form #liquidForm="ngForm" class="form-horizontal"
+                                        (ngSubmit)="updateliquidForm(liquidForm)">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="customRadio"
+                                                    id="customRadio1" value="AUTO" ngModel
+                                                    [(ngModel)]="this.liquidityModel.liquidity_mode"
+                                                    (click)="selectAuto()">
+                                                <label class="custom-control-label" for="customRadio1">AUTO</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="form-group" style="margin-left: 50px;">
+                                            <div class="row" style="height: 20px;">
+                                                <div class="col-lg-4">
+                                                <div class="custom-control custom-radio" style="width:151px">
+                                                    <input type="radio"
+                                                    
+                                                    class="custom-control-input" name="customRadioX" 
+                                                    id="customRadio2"
+                                                    [(ngModel)]="this.liquidityModel.liquidity_mode_type"
+                                                    value="ONCE_A_DAY"
+                                                    ngModel
+                                                    >
+                                                    <label class="custom-control-label" for="customRadio2">Order Placement in  </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <label style="float:right;margin-right: 116px;">Hrs</label>
+                                                    <select 
+                                                    [(ngModel)]="this.liquidityModel.liquidity_day_interval" 
+                                                    name="liquidity_day_interval"
+                                                    id="liquidity_day_interval"
+                                                    ngModel class="custom-select col-lg-6"  style="width: 100px;height: 26px; padding-top: 0px;">
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                        <option value="13">13</option>
+                                                        <option value="14">14</option>
+                                                        <option value="15">15</option>
+                                                        <option value="16">16</option>
+                                                        <option value="17">17</option>
+                                                        <option value="18">18</option>
+                                                        <option value="19">19</option>
+                                                        <option value="20">20</option>
+                                                        <option value="21">21</option>
+                                                        <option value="22">22</option>
+                                                        <option value="23">23</option>
+                                                        <option value="24">24</option> 
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group" style="margin-left: 50px;">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="customRadioX"
+                                                    id="customRadio3" value="ORDER_FOR_ORDER" ngModel
+                                                    [(ngModel)]="this.liquidityModel.liquidity_mode_type"
+                                                    (click)="selectOrder()">
+                                                <label class="custom-control-label" for="customRadio3">Order By
+                                                    Order</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="customRadio"
+                                                    id="customRadio4" value="MANUAL" ngModel
+                                                    [(ngModel)]="this.liquidityModel.liquidity_mode"
+                                                    (click)="selectManual()">
+                                                <label class="custom-control-label" for="customRadio4">Manual</label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-danger">Update</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle><b>ORDER HISTORY</b></ng-template>
+                    <ng-template ngbTabContent>
+                        <div class="card-body">
+                            <div class="trade_filter_sec">
+                                <form #searchForm="ngForm" class="form-horizontal m-t-30"
+                                    (ngSubmit)="FilterOrders(searchForm)">
+                                    <div class="col" style="margin-bottom: 30px;">
+                                        <ul class="top_filters">
+                                            <li>
+                                                <!-- <label>Select Pair</label> -->
+                                                <select class="form-control custom-select" name="pairId"
+                                                    style="width:53%" ngModel id="pair">
+                                                    <option value="">Select Pair</option>
+                                                    <option [value]="pair.buyFrom + '_' + pair.buyTo"
+                                                        *ngFor="let pair of currencyPairsList">
+                                                        {{pair.buyFrom | uppercase}}/{{pair.buyTo | uppercase}}</option>
+                                                </select>
+                                            </li>
+
+                                            <li>
+                                                <!-- <label>Select Type</label> -->
+                                                <select class="form-control custom-select" name="orderType"
+                                                    style="width: 53%;" id="orderType" ngModel>
+                                                    <option value="">Select Type</option>
+                                                    <option value="all">All</option>
+                                                    <option value="buy">Buy</option>
+                                                    <option value="sell">Sell</option>
+                                                </select>
+                                            </li>
+                                            <li>
+
+                                                <button type="submit" [disabled]="searchForm.invalid"
+                                                    class="btn btn-secondary">Search</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                                <div class="col" style="margin-bottom: 10px;">
+                                    <!-- <a style="cursor:pointer"  (click)="DownloadCSV()"> <i class="mdi mdi-arrow-down-box pointer"> </i>Download CSV file</a> -->
+                                    <label style="float: right;">Total Orders: {{totalRecords}}</label>
+                                </div>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Currency Pair</th>
+                                        <th>Order Type</th>
+                                        <th>Dated</th>
+                                        <th>QTY</th>
+                                        <th>Exchange</th>
+                                        <th>External Id</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let list of orderHistoryList | paginate: { itemsPerPage: orderLimit, currentPage: orderPage ,totalItems:ordertotal}">
+                                        <td>{{list.buy_sell_pairs[0].fiat.currency_symbol | uppercase}}/{{list.buy_sell_pairs[0].crypto.currency_symbol | uppercase }}
+                                        </td>
+                                        <td>{{list.order_type}}</td>
+                                        <td> {{list.created_at | date:'MMM d, y, h:mm:ss a' }}</td>
+                                        <td> {{list.liquidity_vol}}</td>
+                                        <td> {{list.exchangeId}}</td>
+                                        <td> {{list.external_tx_id}}</td>
+                                        <td>
+                                            <ul class="deposit_action">
+                                                <li *ngIf="list.order_status=='confirmed'"><input type="button"
+                                                        title="Confirmed" class="btnAccepted accept"></li>
+                                                <li *ngIf="list.order_status=='pending'"><input title="Pending"
+                                                        type="button" class="btnAccepted decline"></li>
+                                                <li *ngIf="list.order_status=='cancelled'"><input title="Cancelled"
+                                                        type="button" class="btnAccepted decline"></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="empty">
+                                        <td colspan="3">No Record found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-right" *ngIf="!empty">
+                                <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+    </div>
+</div>

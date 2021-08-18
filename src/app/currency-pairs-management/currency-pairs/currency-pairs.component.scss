@@ -1,0 +1,74 @@
+.currency_block {
+    width: calc(100% / 4);
+    float: left;
+    padding: 5px;
+    .currency_block_inner {
+        display: table;
+        width: 100%;
+        .currency_label {
+            display: table-cell;
+            vertical-align: middle;
+            float: none;
+            width: 50%;
+            padding: 0px 10px;
+            label {
+                margin-bottom: 0px;
+            }
+        }
+        .currency_actions {            
+            display: table-cell;
+            vertical-align: middle;
+            float: none;
+            width: 100%;
+            padding: 0px 10px;
+            ul {
+                margin-bottom: 0px;
+                padding: 0px;
+                display: flex;
+                justify-content: space-between;
+                li {
+                    display: inline-block;
+                    margin-right: 10px;
+                    font-size: 15px;
+                    ul {
+                        margin-bottom: 0px;
+                        padding: 0px;
+                        li {
+                            display: inline-block;
+                            margin-right: 10px;
+                            text-align: center;
+                            &:last-child {
+                                margin-right: 0px;
+                            }
+                        }
+                    }
+                    i {
+                        color: #000000;
+                    }
+                    label {
+                        margin-bottom: 0px;
+                        color: #000000;
+                    }
+                    .mdi-currency-btc {
+                        border: solid 1px;
+                        border-radius: 100px;
+                        padding: 0px 2px;
+                        font-size: 16px;
+                    }
+                    .fa-arrows-h {
+                        font-size: 24px;
+                    }
+                    &:last-child {
+                        margin-right: 0px;
+                    }
+                }
+            }
+        }
+    }
+}
+img.ethereum {
+    width: 22px;
+    border: solid 1px #000;
+    border-radius: 100px;
+    padding: 2px;
+}

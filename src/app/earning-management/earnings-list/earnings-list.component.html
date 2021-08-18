@@ -1,0 +1,67 @@
+<div class="row">
+
+    <div class="card" style="width:100%">
+        <div class="card-body">
+            <!-- <h3 class="card-title">Default Tabset</h3>
+            <h6 class="card-subtitle">This is basic Default pagination</h6> -->
+            <ngb-tabset>
+              <ngb-tab title="Withdraw">
+                <ng-template ngbTabContent>
+                        <!-- <div class="card-body">
+                              <button type="button" class="btn btn-secondary" style="margin-left:10px;height: 36px;width: 88px;float:right;" ng-click="GetBuyDetails()">Search</button>
+                                <select class="form-control custom-select" style="width:16%;float:right;margin-left: 5px;">
+                                    <option value="1">BTC</option>
+                                    <option value="2">LTC</option>
+                                    <option value="3">BCH</option>
+                                    <option value="4">XRP</option>
+                                    <option value="5">ETH</option>
+                                    </select>
+                        </div> -->
+                        <div class="card-body">
+                               
+                                <div class="col" style="margin-bottom: 10px;">
+                                        <label> <i class="mdi mdi-arrow-down-box"> </i>Download CSV file</label>
+                                     </div>
+                               
+                                <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th>Currency</th>
+                                            <th>Total</th>
+                                            <th>Withdraw</th>
+                                            <th>Pending</th>
+                                            <th>Action</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let list of earningList | paginate: { itemsPerPage: 10, currentPage: pageNo ,totalItems:totalRecords}">
+                                            <td>{{list.currency}} </td>
+                                            <td>{{list.total}}</td>
+                                            <td> {{list.withdraw}}</td>
+                                            <td> {{list.pending}}</td>
+                                            <td> <a target="_blank" [routerLink]="['/earning-management/earning-withdraw/1']"> <i class="mdi mdi-cash text-warning m-r-10"> </i></a></td>
+                                            
+                                          </tr>
+                        
+                                          <tr *ngIf="empty">
+                                            <td colspan="3">No Record found</td>
+                                          </tr>
+                                        </tbody>
+                        
+                                      </table>
+                                      <div class="pull-right" *ngIf="!empty">
+                                          <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                                       </div>
+
+
+                            </div>
+                  
+                </ng-template>
+              </ngb-tab>
+             
+            
+            </ngb-tabset>
+    </div>
+    </div>
+
+</div>

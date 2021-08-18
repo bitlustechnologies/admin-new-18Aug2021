@@ -1,0 +1,122 @@
+<div class="row">
+
+    <div class="card" style="width:100%">
+        <div class="card-body">
+            <!-- <h3 class="card-title">Default Tabset</h3>
+            <h6 class="card-subtitle">This is basic Default pagination</h6> -->
+            <ngb-tabset>
+              <ngb-tab title="BTC Withdraw">
+                <ng-template ngbTabContent>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card card-body">
+                                    <form #userForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="CreateUser(userForm)">
+                                       
+                                        <div class="form-group">
+                                            <label>Amount</label><br />
+                                            <label style="font-size: 13px;">24h Withdrawl Limit:0/2.0 BTC</label><br />
+                                            <input autocomplete="off" id="amountWithdraw" name="amountWithdraw" class="form-control" required  [(ngModel)]="newUser.amountWithdraw" #amountWithdraw="ngModel" style="width: 395px;"><br />
+                                            <div *ngIf="amountWithdraw.invalid && (amountWithdraw.dirty || amountWithdraw.touched)" class="alert alert-danger" style="width: 395px;">
+                                                <div *ngIf="amountWithdraw.errors.required"> Amount is required. </div>
+                                            </div>
+                                           
+                                        </div> 
+                                      <div class="form-group">
+                                            <label>Receiving Address</label><br />
+                                            <input autocomplete="off" id="address" name="address" class="form-control" required  [(ngModel)]="newUser.address" #address="ngModel" style="width: 395px;">
+                                            <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger" style="width: 395px;">
+                                                <div *ngIf="address.errors.required"> Address is required. </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                            <div class="col-sm-2">
+                                                <label>BTC Commission</label><br />
+                                                <label>3000</label>
+                                              </div>
+                                            <div class="col-sm-10"> <label>Pending</label><br />
+                                                  <label>2000</label>
+                                              </div>
+                                            </div>
+                                           
+                                        </div>
+                                        <button type="submit" class="btn btn-danger" [disabled]="userForm.invalid" style="width: 130px;">Withdraw</button>
+                                        <button type="button" class="btn btn-inverse" [routerLink]="['/earning-management/earnings-list']" style="margin-left:10px;width: 130px;">Back</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                        <!-- Row -->
+                  </div>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab>
+                <ng-template ngbTabTitle><b>History</b></ng-template>
+                <ng-template ngbTabContent>
+                    <div class="card-body"> 
+                        <div class="row">
+                            <!-- column -->
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- <h4 class="card-title">Choose Currency Pair</h4> -->
+                                        <!-- <ngx-datatable
+                                            #table
+                                            class='material'
+                                            [columns]='columns'
+                                            [columnMode]="'force'"
+                                            [headerHeight]="50"
+                                            [footerHeight]="50"
+                                            [rowHeight]="'auto'"
+                                            [limit]="10"
+                                            [rows]='rows'> 
+                                           
+                                          </ngx-datatable>
+                                          -->
+
+                                          <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <th>Txn ID</th>
+                                                <th>Address To</th>
+                                                <th>Amount</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <tr *ngFor="let list of withdrawList | paginate: { itemsPerPage: 10, currentPage: pageNo ,totalItems:totalRecords}">
+                                                <td>{{list.txnId}} </td>
+                                                <td>{{list.addressTo}}</td>
+                                                <td> {{list.amount}}</td>
+                                                <td> {{list.date}}</td>
+                                                <td> {{list.status}}</td>
+                                              </tr>
+                            
+                                              <tr *ngIf="empty">
+                                                <td colspan="3">No Record found</td>
+                                              </tr>
+                                            </tbody>
+                            
+                                          </table>
+                                          <div class="pull-right" *ngIf="!empty">
+                                              <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                                           </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                          
+                          </div>
+                          
+                  </div>
+                </ng-template>
+              </ngb-tab>
+             
+            </ngb-tabset>
+    </div>
+    </div>
+
+</div>

@@ -1,0 +1,39 @@
+<div class="row">
+  <!-- column -->
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Currency Id</th>
+              <th>Currency Name</th>
+              <th>Sign</th>
+              <th>Icon</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let list of currencyList">
+              <td>{{list.currency_id}} </td>
+              <td>{{list.currency_name}} </td>
+              <td>{{list.sign}}</td>
+              <td><img src="{{list.icon}}" width="50"/></td>
+              <td>{{list.is_active}}</td>
+              <td>
+                <button type="button" class="btn btn-secondary" (click)="editCurrency(list.currency_id)"> <i class="mdi mdi-grease-pencil"> </i></button>
+              </td>
+            </tr>
+            <tr *ngIf="empty">
+              <td colspan="3">No Record found</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <div class="pull-right" *ngIf="!empty">
+          <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

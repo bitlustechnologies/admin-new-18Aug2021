@@ -1,0 +1,34 @@
+.top_filters {
+    padding: 0px;
+    margin-bottom: 0px;
+    display: grid;  
+ /* justify-content: space-between; */
+    align-items: center;
+    li {
+        margin-bottom: 20px;
+        display: inline-block;
+        margin-right: 10px;
+        flex: 33%;
+        label {
+            float: left;
+            width: 100%;
+        }
+        input {
+            font-size: 14px;
+        }
+        &:last-child {
+            margin-right: 0px;
+        }
+        &.date {
+            max-width: 70%;
+        }
+        .btn {
+            height: 38px;
+        }
+    }
+}
+.filterSearchForm{
+    width: 100%;
+    margin-top: 30px;
+    margin-left: 20px;
+}

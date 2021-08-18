@@ -1,0 +1,317 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-body">
+            <form #editForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="UpdateKycUser(editForm)">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>First Name</label><br />
+                            <input id="firstName" minlength="2" maxlength="50" name="firstName" class="form-control"
+                                required [(ngModel)]="Kycdata.first_name" #firstName="ngModel" autocomplete="off">
+                            <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="firstName.errors.required"> First Name is required. </div>
+                                <div *ngIf="firstName.errors.minlength"> Minimum
+                                    {{firstName.errors.minlength.requiredLength}} chracters are required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-4">
+                            <div class="form-group">
+                                <label>Middle Name</label><br />
+                                <input id="middleName" minlength="2" maxlength="50" name="middleName" class="form-control"  [(ngModel)]="Kycdata.middle_name" #middleName="ngModel">
+                            </div>
+                        </div> -->
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Last Name</label><br />
+                            <input id="lastName" name="lastName" class="form-control" required
+                                [(ngModel)]="Kycdata.last_name" #lastName="ngModel" autocomplete="off">
+                            <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="lastName.errors.required"> Last Name is required. </div>
+                                <div *ngIf="lastName.errors.minlength"> Minimum
+                                    {{lastName.errors.minlength.requiredLength}} characters are required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Email</label><br />
+                            <input  minlength="2" maxlength="50" name="email" class="form-control"
+                                required [(ngModel)]="Kycdata.email" type="email" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" #email="ngModel" autocomplete="off">
+                            <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="email.errors.required"> Email is required. </div>
+                                <div *ngIf="email.errors.pattern">Please enter a valid email address</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <div class="col-12 nopadding">
+                                <label for="">Gender*</label>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check-inline">
+                                    <div class="radioBox">
+                                        <input required [(ngModel)]="Kycdata.gender" #gender="ngModel" [value]="1"
+                                            [checked]="true" type="radio" name="gender" id="Male" autocomplete="off">
+                                        <label for="Male"><span>Male</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-check-inline">
+                                    <div class="radioBox">
+                                        <input required [(ngModel)]="Kycdata.gender" #gender="ngModel" type="radio"
+                                            name="gender" [value]="2" id="Female" autocomplete="off">
+                                        <label for="Female"><span>Female</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-check-inline">
+                                    <div class="radioBox">
+                                        <input required [(ngModel)]="Kycdata.gender" #gender="ngModel" type="radio"
+                                            name="gender" [value]="3" id="Other" autocomplete="off">
+                                        <label for="Other"><span>Other</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-danger" *ngIf="gender.touched && !gender.valid">
+                                <span *ngIf="gender.errors.required">Gender Is Required</span>
+                            </p>
+                        </div>
+                    </div>
+                   
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Date of Birth</label><br />
+                            <input id="dob" type="date" name="dob" class="form-control" required
+                                [(ngModel)]="Kycdata.dob" #dob="ngModel">
+                            <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="alert alert-danger">
+                                <div *ngIf="dob.errors.required"> Date of Birth is required. </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Address</label><br />
+                            <input id="address" minlength="2" maxlength="50" name="address" class="form-control"
+                                required [(ngModel)]="Kycdata.address" #address="ngModel" autocomplete="off">
+                            <div *ngIf="address.invalid && (address.dirty || address.touched)"
+                                class="alert alert-danger">
+                                <div *ngIf="address.errors.required"> address is required. </div>
+                                <div *ngIf="address.errors.minlength"> Minimum
+                                    {{address.errors.minlength.requiredLength}}
+                                    chracters are required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>City</label><br />
+                            <input id="city" minlength="2" maxlength="50" name="city" class="form-control" required
+                                [(ngModel)]="Kycdata.city" #city="ngModel" autocomplete="off">
+                            <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger">
+                                <div *ngIf="city.errors.required"> City is required. </div>
+                                <div *ngIf="city.errors.minlength"> Minimum {{city.errors.minlength.requiredLength}}
+                                    chracters are required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>State</label><br />
+                            <input id="state" minlength="2" maxlength="50" name="state" class="form-control" required
+                                [(ngModel)]="Kycdata.state" #state="ngModel" autocomplete="off">
+                            <div *ngIf="state.invalid && (state.dirty || state.touched)" class="alert alert-danger">
+                                <div *ngIf="state.errors.required"> State is required. </div>
+                                <div *ngIf="state.errors.minlength"> Minimum {{state.errors.minlength.requiredLength}}
+                                    chracters are required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Zip Code/Postal Code*</label>
+                            <input required minlength="3" maxlength="10" [(ngModel)]="Kycdata.zipcode"
+                                #zipcode="ngModel" name="zipcode" class="form-control" placeholder="Type here"
+                                type="text" autocomplete="off">
+                            <p class="text-danger" *ngIf="zipcode.touched && !zipcode.valid">
+                                <span *ngIf="zipcode.errors.required">Zipcode Is Required</span>
+                                <span *ngIf="zipcode.errors.minlength">Minimum
+                                    {{zipcode.errors.minlength.requiredLength}} character Is required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Country*</label>
+                            <select required class="form-control" [(ngModel)]="countryVal" name="country1"
+                                #country1="ngModel" (change)="doSelect(country1)">
+                                <option value="">Please select country</option>
+                                <option *ngFor="let item of items" [value]="item.id">{{item.text}}</option>
+                            </select>
+                            <p class="text-danger" *ngIf="country1.touched && !country1.valid">
+                                <span *ngIf="country1.errors.required">Country Is Required</span>
+                            </p>
+                        </div>
+
+
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Country Code*</label>
+                            <input required minlength="3" maxlength="30" readonly="readonly" name="country"
+                                class="form-control" placeholder="Country Code (Select country first)"
+                                [(ngModel)]="autoCountrycode" type="text" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="">Address*</label>
+                                <input required minlength="3" maxlength="200"   [(ngModel)]="Kycdata.address" #address ="ngModel" name="address" class="form-control" placeholder="Address" type="text">
+                                <p class="text-danger" *ngIf="address.touched && !address.valid">
+                                    <span *ngIf = "address.errors.required" >Address Is Required</span>
+                                    <span *ngIf = "address.errors.minlength" >Minimum {{address.errors.minlength.requiredLength}}  character Is required</span>
+                                </p> 
+                            </div>
+                        </div> 
+                    </div> -->
+                <div class="row">
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Mobile Phone Number</label>
+                            <input minlength="9" maxlength="15" pattern="[0-9]+" [(ngModel)]="Kycdata.phone"
+                                #phone="ngModel" name="phone" class="form-control" placeholder="Type here" type="text"
+                                autocomplete="off">
+                            <p class="text-danger" *ngIf="phone.touched && !phone.valid">
+                                <span *ngIf="phone.errors.required"> Phone Is Required</span>
+                                <span *ngIf="phone.errors.minlength"> Minimum {{phone.errors.minlength.requiredLength}}
+                                    characters are required</span>
+                                <span *ngIf="phone.errors.pattern"> Only numbers are allowed</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Document Type*</label>
+                            <select required [(ngModel)]="Kycdata.doc_type" #doctype="ngModel" name="doc_type"
+                                class="form-control" id="" (change)='documentSelection($event)'>
+                                <option [value]="0">Please select</option>
+                                <option [value]="1">National Id</option>
+                                <option [value]="2">Passport</option>
+                                <option [value]="3">Driving License </option>
+                            </select>
+                            <p class="text-danger" *ngIf="doctype.touched && !doctype.valid">
+                                <span *ngIf="doctype.errors.required">Document Type Is Required</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Document Number*</label>
+                            <input minlength="2" maxlength="30" required [(ngModel)]="Kycdata.doc_number"
+                                #docnumber="ngModel" name="doc_number" class="form-control" placeholder="Type here"
+                                type="text" autocomplete="off">
+                            <p class="text-danger" *ngIf="docnumber.touched && !docnumber.valid">
+                                <span *ngIf="docnumber.errors.required">Document Number Is Required</span>
+                                <span *ngIf="docnumber.errors.minlength">Minimum
+                                    {{docnumber.errors.minlength.requiredLength}} character Is required</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="" *ngIf="Kycdata.doc_type != 1">Document Expiry Date*</label>
+                            <label for="" *ngIf="Kycdata.doc_type == 1">Document Expiry Date (If required)</label>
+
+                            <input [(ngModel)]="Kycdata.doc_exp_date" #doc_exp_date="ngModel" name="doc_exp_date"
+                                class="form-control" placeholder="Type here" type="date" autocomplete="off">
+                            <p class="text-danger" *ngIf="doc_exp_date.touched && !doc_exp_date.valid">
+                                <span *ngIf="doc_exp_date.errors.required">Document Expiry Is Required</span>
+                                <span *ngIf="doc_exp_date.errors.minlength">Minimum
+                                    {{docexpiry.errors.minlength.requiredLength}} character Is required</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Front* (doc,docx,xlm,pdf,png,jpeg,gif,tiff,raw)</label>
+                            <input name="kyc_front_photo" type="file" (change)="upload($event)"
+                                class="form-control uploadBtn" placeholder="Upload" autocomplete="off">
+
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Pan Card (png,jpeg,gif,tiff,raw)</label>
+                            <input name="p_res_photo" type="file" (change)="upload_pan($event)" 
+                                class="form-control uploadBtn" placeholder="Upload">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <a *ngIf="docTypeImg==1" (click)="moveToDoc(hrefPath)"><img *ngIf="kyc_front_photo"
+                                    [src]="kyc_front_photo" width="100"></a>
+                            <img *ngIf="docTypeImg==0" [src]="kyc_front_photo" width="100">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <img *ngIf="p_res_photo" [src]="p_res_photo" width="100">
+                        </div>
+                    </div>
+                </div>
+
+             <div *ngIf="adminSelectedDoctype != 'Driving License'">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Back Photo* (doc,docx,xlm,pdf,png,jpeg,gif,tiff,raw)</label>
+                            <input name="kyc_back_photo" type="file" (change)="upload_backphoto($event)"
+                                class="form-control uploadBtn" placeholder="Upload" autocomplete="off">
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+         
+                    <div class="col-6">
+                        <div class="form-group">
+                            <img *ngIf="kyc_back_photo" [src]="kyc_back_photo" width="100">
+                        </div>
+                    </div>
+                </div>
+             </div>
+
+                <button type="submit" class="btn btn-danger">Update</button>
+                <button type="button" class="btn btn-inverse" [routerLink]="['/admin/approved_kyc']"
+                    style="margin-left:10px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+<!-- Row -->

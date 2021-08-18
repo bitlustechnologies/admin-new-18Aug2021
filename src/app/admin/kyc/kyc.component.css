@@ -1,0 +1,14 @@
+#image-holder {
+  width: 500px;
+  height: auto;
+  position: absolute;
+  left: 300px;
+  top: 200px; /* Or perhaps different coordinates */
+  display: none;
+}
+p {
+  color: #000000;
+}
+.spanColor {
+  color: #0fc776;
+}

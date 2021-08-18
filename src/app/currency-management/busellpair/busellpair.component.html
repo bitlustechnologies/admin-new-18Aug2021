@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-lg-12">
+    <select class="form-control custom-select" name="currency" [(ngModel)]="defaultCurrency" (change)="onChange($event.target.value)" style="width: 20%; float: right;">
+      <option [value]="currency.currency_id" *ngFor="let currency of fiatCurrency">{{currency.currency_symbol | uppercase}}</option>
+    </select>
+  </div>
+  <div class="col-lg-12 curncy-section"  >
+    <div class="currency_block" *ngFor="let list of currencyPairsList">
+        <div>
+          <div class="currency_block_inner">                         
+            <div class="currency_actions">
+              <ul>
+                <li><label>{{list.buyFrom | uppercase}}</label>  </li>
+                <li>
+                  <ul>
+                    <li><i class="comn_currency_icon {{list.buyFrom}}"></i> </li>
+                    <li><i class="fa fa-arrows-h"></i></li>
+                    <li><i class="comn_currency_icon {{list.buyTo}}"></i></li>
+                  </ul> 
+                </li>
+                <li><label>{{list.buyTo | uppercase}}</label> </li>
+              </ul>
+            </div>      
+          </div>
+          <div class="set_limit_sec">
+            <button type="button" (click)=onEdit(list) class="btn btn-secondary">Set Fee</button>        
+          </div>
+          <div class="trade_limit">
+            <div class="trade_limit_blocks"> <label><strong>Buy:</strong></label><br />
+              <label>Buy Min Limit: {{list.buyOrderLimit}}</label><br />
+              <label>Buy Max Limit: {{list.maxBuyOrderLimit}}</label><br />
+              <label>Buy Fee: {{ (list.buyFee) ? list.buyFee+'%' : ''}}</label>
+
+            </div>
+            <div class="trade_limit_blocks">
+              <label><strong>Sell:</strong></label><br />
+              <label>Sell Min Limit: {{list.sellOrderLimit}}</label><br />
+              <label>Sell Max Limit: {{list.maxSellOrderLimit}}</label><br />
+              <label>Sell Fee: {{ (list.sellFee) ? list.sellFee+'%' : ''}}</label>
+              
+
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+  
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Google Authenticator</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form #f= "ngForm" (ngSubmit)="SubmitPassword(f)">
+    <div class="modal-body">
+      <div class="form-group">
+        <input autocomplete="off" required autocomplete="off" ngModel minlength="2" name = "token"  #token ="ngModel" type="text" class="form-control" placeholder="Enter your token here" 
+          [(ngModel)]="googleAuth" maxlength="50">
+        <p class="text-danger" *ngIf="token.touched && !token.valid">
+          <span *ngIf = "token.errors.required" >Token is required</span>
+          <span *ngIf = "token.errors.minlength" >Minimum {{token.errors.minlength.requiredLength}}  chracter is required</span>
+        </p>
+      </div>
+      <p style="margin-top:10px">If not set Google Authentication <a (click)="closePopup()" [routerLink]="['/admin-dashboard-section/admin-profile']">click here </a> to enable.
+   </div>
+    <div class="modal-footer">
+        <input [disabled]="!f.valid" class="btn btn-outline-primary" type="submit" placeholder="Submit" value="Submit">
+      <!-- <button type="button" class="btn btn-secondary" (click)="SubmitPassword()">Submit</button> -->
+    </div>
+  </form>
+</ng-template>
+    

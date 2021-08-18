@@ -1,0 +1,273 @@
+<div class="row">
+    <!-- column -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div *ngIf="tabActiveId == 'tabFiat'">
+                    <form #searchForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="FilterDeposits(searchForm)">
+                        <div class="col" style="margin-bottom: 30px;">
+                            <ul class="top_filters">
+                                <li>
+                                    <label>Select Currency</label>
+                                    <select class="form-control custom-select" name="coinId"
+                                        [(ngModel)]="depositSearchModel.coinId" style="width:101%">
+                                        <option value="all">All</option>
+                                        <option [value]="currency.currency_id" *ngFor="let currency of coinList">
+                                            {{currency.currency_symbol | uppercase}}</option>
+                                    </select>
+                                </li>
+                                <li style="margin-left: 3px;">
+                                    <label>Select Status</label>
+                                    <select class="form-control custom-select" name="status"
+                                        [(ngModel)]="depositSearchModel.status" style="width:102%">
+                                        <option value="all">All</option>
+                                        <option value="confirmed">Confirmed</option>
+                                        <option value="unconfirmed">Pending</option>
+                                    </select>
+                                </li>
+                                <li style="margin-left: 5px;">
+                                    <label>User Id</label>
+                                    <input autocomplete="off" type="text" class="form-control" name="userId"
+                                        [(ngModel)]="depositSearchModel.userId" style="width:96%">
+                                </li>
+                                <!-- <li style="margin-left: -20px;">
+                                    <label>Zedxe Id</label>
+                                    <input type="text" class="form-control" style="width:96%">
+                                </li> -->
+                            </ul>
+                        </div>
+                        <div class="col" style="margin-bottom: 30px;">
+                            <ul class="top_filters">
+                                <li>
+                                    <label>Email</label>
+                                    <input autocomplete="off" type="text" class="form-control" name="email"
+                                        [(ngModel)]="depositSearchModel.email">
+                                </li>
+                                <li class="date">
+                                    <label>From</label>
+                                    <input v placeholder="FromDate" type="date" name="fromDate" class="form-control"
+                                        [(ngModel)]="depositSearchModel.fromDate">
+                                </li>
+                                <li class="date">
+                                    <label>To</label>
+                                    <input autocomplete="off" placeholder="ToDate" type="date" name="toDate"
+                                        class="form-control date" [(ngModel)]="depositSearchModel.toDate">
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col" style="margin-bottom: 30px;">
+                            <ul class="top_filters">
+                                <li>
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-secondary">Search</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                    <div class="col" style="margin-bottom: 10px;">
+                        <a style="cursor:pointer" (click)="showAll(depositList,'deposit-crypto')"> Show All</a>
+                        |
+                        <a style="cursor:pointer" (click)="DownloadCSV(depositList,'deposit-crypto')"> <i
+                                class="mdi mdi-arrow-down-box pointer">
+                            </i>Download CSV file</a>
+                        <label style="float: right;">Total Deposits: {{totalRecords}}</label>
+                    </div>
+                    <!-- <div> <label style="float: right;">Total Users: 11</label></div> -->
+                </div>
+                <div *ngIf="tabActiveId == 'tabCrypto'">
+                    <form #searchForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="FilterDeposits(searchForm)">
+                        <div class="col-12" style="margin-bottom: 30px;">
+                            <ul class="top_filters">
+                                <li style="margin-left: 3px;">
+                                    <label>Select Status</label>
+                                    <select class="form-control custom-select" name="status"
+                                        [(ngModel)]="depositSearchModel.status" style="width:102%">
+                                        <option selected value="all">All</option>
+                                        <option value="APPROVED">Approved</option>
+                                        <option value="REJECTED">Rejected</option>
+                                    </select>
+                                </li>
+                                <li class="date">
+                                    <label>From</label>
+                                    <input v placeholder="FromDate" type="date" name="fromDate" class="form-control"
+                                        [(ngModel)]="depositSearchModel.fromDate">
+                                </li>
+                                <li class="date">
+                                    <label>To</label>
+                                    <input autocomplete="off" placeholder="ToDate" type="date" name="toDate"
+                                        class="form-control date" [(ngModel)]="depositSearchModel.toDate">
+                                </li>
+
+                                <li>
+                                    <label>Email</label>
+                                    <input autocomplete="off" type="text" class="form-control" name="email"
+                                        [(ngModel)]="depositSearchModel.email">
+                                </li>
+
+                                <li style="margin-left: 5px;">
+                                    <label>User Id</label>
+                                    <input autocomplete="off" type="text" class="form-control" name="referredBy"
+                                        [(ngModel)]="depositSearchModel.referredBy" style="width:96%">
+                                </li>
+                                <li style="margin-left :10px">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-secondary">Search</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                    <div class="col" style="margin-bottom: 10px;">
+                        <a style="cursor:pointer" (click)="showAll('deposit-fiat')"> Show All</a>
+                        |
+                        <a style="cursor:pointer" (click)="DownloadCSV(userlists,'deposit-fiat')"> <i
+                                class="mdi mdi-arrow-down-box pointer">
+                            </i>Download CSV file</a>
+                        <!-- <label style="float: right;">Total Deposits: {{totalRecords}}</label> -->
+                    </div>
+                </div>
+
+                <ngb-tabset (tabChange)="beforeChange($event)">
+                    <ngb-tab title="Crypto" id='tabCrypto'>
+                        <ng-template ngbTabContent>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Txn ID</th>
+                                        <th>Date</th>
+                                        <th>Email</th>
+                                        <th>User ID</th>
+                                        <th>Name</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- container="body"  placement="right" [ngbPopover]="list.txid" #p="ngbPopover" (document:click)="p.close()" (click)="$event.stopPropagation()" -->
+                                    <tr
+                                        *ngFor="let list of depositList | paginate: { itemsPerPage: 10, currentPage: pageNo ,totalItems:totalRecords}">
+                                        <td style="cursor:pointer" [title]="list.txid"
+                                            (click)='copyToClipboard(list.txid)'>{{(list.txid.length>15)? (list.txid |
+                                            slice:0:15)+'...':(list.txid)}} </td>
+                                        <td>{{list.created_date | date: 'dd/MM/yyyy'}}</td>
+                                        <td (click)='copyToClipboard(list.email)' style="cursor: pointer;">{{list.email}}</td>
+                                        <td> {{list.user_id}}</td>
+                                        <td>{{list.user_name}}</td>
+                                        <td> {{
+                                            list.coin == 1 ? 'BTC' :
+                                            list.coin == 3 ? 'BCH' :
+                                            list.coin == 4 ? 'ETH' :
+                                            list.coin == 6 ? 'XRP' :
+                                            list.coin == 7 ? 'ADA' :
+                                            list.coin == 8 ? 'USD' :
+                                            list.coin == 9 ? 'KES' :
+                                            list.coin == 10 ? 'EUR' : 'USD'
+                                            }}</td>
+                                        <td> {{list.amount | exponentcount:8}}</td>
+                                        <td> {{ list.status=='confirmed'?'Confirmed':'Pending' }}</td>
+                                        <td>
+                                            <ul class="deposit_action">
+                                                <li *ngIf="list.status=='confirmed'"><input type="button"
+                                                        class="btnAccepted accept"></li>
+                                                <li *ngIf="list.status=='pending'"><input type="button"
+                                                        class="btnAccepted decline"></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="empty">
+                                        <td colspan="7">No Record found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-right" *ngIf="!empty">
+                                <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                            </div>
+                        </ng-template>
+
+                    </ngb-tab>
+                    <ngb-tab title="Fiat" id='tabFiat'>
+                        <ng-template ngbTabContent>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <!-- <th>Txn ID</th> -->
+                                        <th>Email</th>
+                                        <th>User ID</th>
+                                        <th>Name</th>
+                                        <th>Amount</th>
+                                        <th>Order Id</th>
+                                        <th>Currency</th>
+                                        <th>Submitted Date</th>
+                                        <th>Payment Proof</th>
+                                        <th >Reason</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let list of userlists | paginate: { itemsPerPage: 10, currentPage: pageNo ,totalItems:totalRecords}">
+                                        <!-- <td><span title="{{list.transaction_id}}">{{(list.transaction_id.length>15)? (list.transaction_id | slice:0:15)+'...':(list.transaction_id)}}</span></td> -->
+                                        <td (click)='copyToClipboard(list.email)' style="cursor: pointer;">{{list.email}}</td>
+                                        <td> {{list.member_id}}</td>
+                                        <td>{{list.first_name }} {{list.last_name}}</td>
+                                        <td>{{list.amount | exponentcount:2}}</td>
+                                        <td>
+                                            {{list.refrence_number}}
+                                        </td>
+                                        <td>
+                                            {{list.currency_symbol | uppercase}}
+                                        </td>
+                                        <td>
+                                            {{list.created_at | date:'short'}}
+                                        </td>
+
+                                   <td>
+                                    <a style="cursor: pointer;" *ngIf="list.transaction_receipt != null && list.transaction_receipt !==''"
+                                    target="_blank" (click)='openReceiptImage(list.transaction_receipt)'><i
+                                      class="ti-eye text-info m-r-10">
+                                      <!-- <img src={{list.transaction_receipt_file_id}} /> -->
+                                    </i></a>
+                                   </td>
+                                 
+                                   <td >
+                                 {{list.reason}}
+                                </td>
+                                        <td>
+                                            {{list.txstatus}}
+                                        </td>
+                                
+                                    </tr>
+                                    <tr *ngIf="empty">
+                                        <td colspan="7">Search result not found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-right" *ngIf="!empty">
+                                <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <ng-template #reason let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Reason</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>{{reasonText}}</p>
+    </div>
+    <div class="modal-footer">
+   
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+    </div>
+  </ng-template> -->

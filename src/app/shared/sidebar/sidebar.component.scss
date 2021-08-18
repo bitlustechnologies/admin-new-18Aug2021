@@ -1,0 +1,39 @@
+.nested-menu {
+    .list-group-item {
+        cursor: pointer;
+    }
+    .nested {
+        list-style-type: none;
+    }
+    ul.submenu {
+        display: none;
+        height: 0;
+    }
+    & .expand {
+        ul.submenu {
+            display: block;
+            list-style-type: none;
+            height: auto;
+            li {
+                a {
+                    
+                    padding: 10px;
+                    display: block;
+                }
+            }
+        }
+    }
+}
+.mini-sidebar {
+    .text-muted {
+        margin-left:80px;
+    }
+  }
+  .sidebar-nav ul li a{
+    padding: 8px 22px 8px 10px;
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }

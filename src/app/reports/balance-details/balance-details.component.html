@@ -1,0 +1,62 @@
+<!-- <p-table [value]="balanceDetail">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Currency Name</th>
+            <th>Admin Database Balance<br>(A)</th>
+            <th>Admin Central Wallet Balance<br>(B)</th>
+            <th>Difference Balance<br>(A - B)</th>
+            <th>HitBTC Balance<br>(C)</th>
+            <th>Manual Balance<br>(D)</th>
+            <th>Total Balance<br>(E)</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-list>
+        <tr>
+            <td>{{list.bitzcoin | uppercase}}</td>
+          <td>{{list.bitzdbbalance | reportsExpo:8}}</td>
+          <td>{{list.bitzcenbalance | reportsExpo:8}}</td>
+          <td>{{list.bitzdiffbalance | reportsExpo:8}}</td>
+          <td>{{list.hitbtcbalance | reportsExpo:8}}</td>
+          <td>{{list.manualbalance | reportsExpo:8}}</td>
+          <td>{{list.total | reportsExpo:8}}</td>
+        </tr>
+    </ng-template>
+</p-table> -->
+
+<div class="conatiner">
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <button type="button" class="btn btn-outline-primary updateBtn" (click)="reloadPage()">Update
+                    Funds</button>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Currency Name</th>
+                            <th>Market Maker Funds</th>
+                            <th>Database Users Funds<br>(A)</th>
+                            <th>Admin Central Wallet Funds<br>(B)</th>
+                            <th>Difference Funds<br>(B - A)</th>
+                            <th>FTX Funds<br>(C)</th>
+                            <th>Manual Funds<br>(D)</th>
+                            <th>Total Funds<br>(A + D) For Fiat<br>(B + C + D) For Crypto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let list of balanceDetail">
+                            <td>{{list?.bitzcoin | uppercase}}</td>
+                            <td>{{list?.mmbalance | reportsExpo:8}}</td>
+                            <td>{{list?.bitzdbbalance | reportsExpo:8}}</td>
+                            <td>{{list?.bitzcenbalance | reportsExpo:8}}</td>
+                            <td>{{list?.bitzdiffbalance | reportsExpo:8}}</td>
+                            <td>{{list?.hitbtcbalance | reportsExpo:8}}</td>
+                            <td>{{list?.manualbalance | reportsExpo:8}}</td>
+                            <td>{{list?.total | reportsExpo:8}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

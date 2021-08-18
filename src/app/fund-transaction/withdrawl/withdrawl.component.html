@@ -1,0 +1,239 @@
+<div class="row">
+    <!-- column -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div *ngIf="tabActiveId == 'tabFiat'">
+                    <form #searchForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="FilterWithdraws(searchForm)">
+                        <div class="col" style="margin-bottom: 30px;">
+                            <ul class="top_filters">
+                                <li>
+                                    <label>Select Currency</label>
+                                    <select class="form-control custom-select" name="coinId"
+                                        [(ngModel)]="withdrawSearchModel.coinId" style="width:101%">
+                                        <option value="all">All</option>
+                                        <option [value]="currency.currency_id" *ngFor="let currency of coinList">
+                                            {{currency.currency_symbol | uppercase}}</option>
+                                    </select>
+                                </li>
+                                <li style="margin-left: 3px;">
+                                    <label>Select Status</label>
+                                    <select class="form-control custom-select" name="status"
+                                        [(ngModel)]="withdrawSearchModel.status" style="width:102%">
+                                        <option value="all">All</option>
+                                        <option value="confirmed">Confirmed</option>
+                                        <option value="signed">Pending</option>
+                                        <option value="rejected">Rejected</option>
+                                    </select>
+                                </li>
+                                <li style="margin-left: 5px;">
+                                    <label>User Id</label>
+                                    <input autocomplete="off" type="text" class="form-control" name="userId"
+                                        [(ngModel)]="withdrawSearchModel.userId" style="width:96%">
+                                </li>
+                                <!-- <li style="margin-left: -20px;">
+                                    <label>Zedxe Id</label>
+                                    <input type="text" class="form-control" style="width:96%">
+                                </li> -->
+
+                            </ul>
+                        </div>
+                        <div class="col" style="margin-bottom: 30px;">
+                            <ul class="top_filters">
+                                <li class="date">
+                                    <label>From</label>
+                                    <input placeholder="FromDate" type="date" name="fromDate" class="form-control"
+                                        [(ngModel)]="withdrawSearchModel.fromDate">
+                                </li>
+                                <li class="date">
+                                    <label>To</label>
+                                    <input placeholder="ToDate" type="date" name="toDate" class="form-control date"
+                                        [(ngModel)]="withdrawSearchModel.toDate">
+                                </li>
+                                <!-- <li>
+                                    <label>User Id</label>
+                                    <input type="text" class="form-control">
+                                </li> -->
+                                <li>
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-secondary">Search</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                    <div class="col" style="margin-bottom: 10px;">
+                        <a style="cursor:pointer" (click)="showAll('withdraw-crypto')"> Show All</a>
+                        |
+                        <a style="cursor:pointer" (click)="DownloadCSV(withdrawList,'withdraw-crypto')"> <i
+                                class="mdi mdi-arrow-down-box pointer">
+                            </i>Download CSV file</a>
+                        <label *ngIf="tabActiveId == 'tabFiat'" style="float: right;">Total: {{totalRecords}}</label>
+                    </div>
+                    <!-- <div> <label style="float: right;">Total Users: 11</label></div> -->
+                </div>
+                <div *ngIf="tabActiveId != 'tabFiat'">
+                    <form #searchFiatForm="ngForm" class="form-horizontal m-t-30"
+                        (ngSubmit)="FilterfiatWithdraws(searchFiatForm)">
+                        <div class="col" style="margin-bottom: 30px;">
+                            <ul class="top_filters">
+
+                                <li style="margin-left: 3px;">
+                                    <label>Select Status</label>
+                                    <select class="form-control custom-select" name="status"
+                                        (change)='historyAccordingToStatus()' [(ngModel)]="withdrawSearchModel.status"
+                                        style="width:102%">
+                                        <option value="all">All</option>
+                                        <option value="APPROVED">Approved</option>
+                                        <option value="QUEUE">Queue</option>
+                                        <option value="CANCELLED">Cancelled</option>
+                                    </select>
+                                </li>
+                                <li class="date">
+                                    <label>From</label>
+                                    <input v placeholder="FromDate" type="date" name="fromDate" class="form-control"
+                                        [(ngModel)]="fromDate">
+                                </li>
+                                <li class="date">
+                                    <label>To</label>
+                                    <input autocomplete="off" placeholder="ToDate" type="date" name="toDate"
+                                        class="form-control date" [(ngModel)]="toDate">
+                                </li>
+
+                                <li style="margin-left: 5px;">
+                                    <label>Email</label>
+                                    <input autocomplete="off" type="text" class="form-control" name="email"
+                                        [(ngModel)]="withdrawSearchModel.email" style="width:96%">
+                                </li>
+
+                                <li style="margin-left: 5px;">
+                                    <label>User Id</label>
+                                    <input autocomplete="off" type="text" class="form-control" name="referredBy"
+                                        [(ngModel)]="withdrawSearchModel.userId" style="width:96%">
+                                </li>
+
+                                <li>
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-secondary">Search</button>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </form>
+                    <div class="col" style="margin-bottom: 10px;">
+                        <a style="cursor:pointer" (click)="showAll('withdraw-fiat')"> Show All</a>
+                        |
+                        <a style="cursor:pointer" (click)="DownloadCSV(fiatWithdrawList,'withdraw-fiat')"> <i
+                                class="mdi mdi-arrow-down-box pointer">
+                            </i>Download CSV file</a>
+                        <label *ngIf="tabActiveId == 'tabFiat'" style="float: right;">Total: {{totalRecords}}</label>
+                    </div>
+                    <!-- <div> <label style="float: right;">Total Users: 11</label></div> -->
+                </div>
+                <ngb-tabset (tabChange)="beforeChange($event)">
+                    <ngb-tab title="Crypto" id='tabCrypto'>
+                        <ng-template ngbTabContent>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Txn ID</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>User ID</th>
+                                        <th>Name</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                        <th>Withdraw To</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- container="body"  placement="right" [ngbPopover]="list.txid"  #p="ngbPopover" (document:click)="p.close()" (click)="$event.stopPropagation()" -->
+                                    <tr
+                                        *ngFor="let list of withdrawList | paginate: { itemsPerPage: 10, currentPage: pageNo ,totalItems:totalRecords}">
+                                        <td style="cursor: pointer;" (click)='copyToClipboard(list.txid)'
+                                            [title]="list.txid">{{(list.txid.length>15)? (list.txid |
+                                            slice:0:15)+'...':'-'}}</td>
+                                        <td>{{list.created_date | date: 'dd/MM/yyyy':'+0530'}}</td>
+                                        <td>{{list.created_date | date: 'shortTime':'+0530'}}</td>
+                                        <td> {{list.user_id}}</td>
+                                        <td>{{list.user_name}}</td>
+                                        <td> {{
+                                            list.coin == 1 ? 'BTC' :
+                                            list.coin == 3 ? 'BCH' :
+                                            list.coin == 4 ? 'ETH' :
+                                            list.coin == 6 ? 'XRP' :
+                                            list.coin == 7 ? 'ADA' :
+                                            list.coin == 8 ? 'USD' :
+                                            list.coin == 9 ? 'KES' :
+                                            list.coin == 10 ? 'EUR' : 'USD'
+                                            }}</td>
+                                        <td> {{list.amount | exponentcount:8}}</td>
+                                        <td style="cursor: pointer;" [title]="list.address_to"
+                                            (click)='copyToClipboard(list.address_to)'> {{(list.address_to.length>15)?
+                                            (list.address_to | slice:0:15)+'...':(list.address_to)}}</td>
+                                        <td> {{ list.status=='confirmed'? ('Confirmed'):((list.status=='rejected')?
+                                            'Rejected' : 'Pending') }}</td>
+
+                                    </tr>
+
+                                    <tr *ngIf="empty">
+                                        <td colspan="3">No Record found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-right" *ngIf="!empty">
+                                <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                            </div>
+                        </ng-template>
+
+                    </ngb-tab>
+                    <ngb-tab title="Fiat" id='tabFiat'>
+                        <ng-template ngbTabContent>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>User Id</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Account Number</th>
+                                        <th>Reference Number</th>
+                                        <th>Amount</th>
+                                        <th>Currency</th>
+                                        <th>Date</th>
+                                        <th>Transaction/UTR no.</th>
+                                        <th >Reason</th>
+                                        <th>Status</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let list of fiatWithdrawList | paginate: { itemsPerPage: 10, currentPage: pageNo ,totalItems:total}">
+                                        <td> {{list.member_id}}</td>
+                                        <td>{{list.name}}</td>
+                                        <td  (click)="copyToClipboard(list.email)" style="cursor: pointer;">{{list.email}}</td>
+                                        <td> {{(list.account_number)}}</td>
+                                        <td> {{list.refrence_number}}</td>
+                                        <td> {{list.amount | exponentcount:2}}</td>
+                                        <td> {{list.currency_symbol | uppercase }}</td>
+                                        <td>{{list.created_at | date: 'short':'+0530'}}</td>
+                                        <td>{{list.t_id}}</td>
+                                        <td >{{list.reason}}</td>
+                                        <td> {{ list.status }}</td>
+                                    </tr>
+                                    <tr *ngIf="fiatWithdrawList.length == 0">
+                                        <td colspan="3">No Record found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-right" *ngIf="fiatWithdrawList.length > 0">
+                                <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

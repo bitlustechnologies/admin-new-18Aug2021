@@ -1,0 +1,151 @@
+<div class="row">
+  <!-- column -->
+  <div class="col-lg-12">
+    <div class="card">
+      <ngb-tabset>
+        <ngb-tab title="Balance Report">
+          <ng-template ngbTabContent>
+            <div class="card-body">
+              <!-- <h4 class="card-title">Choose Currency Pair</h4> -->
+              <div class="col" style="margin-bottom: 10px;">
+                <a style="cursor:pointer" (click)="DownloadCSV()"> <i class="mdi mdi-arrow-down-box pointer">
+                  </i>Download CSV file</a>
+              </div>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Currency</th>
+                      <th>HotWalletBalance</th>
+
+                      <th>Funds/Commitment</th>
+                      <th>Delta</th>
+                      <th>Withdraw Pending Balance</th>
+                      <th>Withdraw Delta</th>
+
+                      <th>FTXWalletBalance</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let list of bitgocoinList">
+                      <td>{{list.currency_name}} </td>
+                      <td>{{list.hotwallet | reportsExpo:8}}</td>
+
+                      <td>{{list.commitment | reportsExpo:8}}</td>
+                      <td>{{list.delta | reportsExpo:8}}</td>
+                    <td>{{list.withdrawPendingBalance | reportsExpo:8}}</td>
+                    <td>{{list.withdrawDelta | reportsExpo:8}}</td>
+
+                      <td>{{list.coldwallet | reportsExpo:8}}</td>
+                      <td *ngIf="list.address != null && list.bal_address != null">
+                        <button style="background: #0fc776" type="button" class="btn" (click)="open(list)">Move to
+                          External Wallet</button> |
+                        <button  type="button" style="background: #0fc776;margin-top:2px !important;" class="btn"
+                          (click)="ShowQRCode(list)">Deposit</button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="empty">
+                      <td colspan="3">No Record found</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- <div class="pull-right" *ngIf="!empty">
+                <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+              </div> -->
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle><b>Withdraw History</b></ng-template>
+          <ng-template ngbTabContent>
+            <div class="card-body">
+              <app-withdraw-history></app-withdraw-history>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle><b>Deposit History</b></ng-template>
+          <ng-template ngbTabContent>
+            <div class="card-body">
+              <app-deposit-history></app-deposit-history>
+            </div>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Move to External Wallet</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <h6>Balance in {{currencyType}} hot Wallet: {{hotWalletBalance}} ({{currencyName}})</h6>
+        <div class="input-group">
+          <select class="form-control custom-select" (change)='exchangeOption($event)' style="width:416px">
+            <option *ngFor=" let ex of exchangesList" [value]="ex.id">{{ex.name}}</option>
+          </select>
+        </div>
+        <br />
+        <div class="input-group">
+          <input autocomplete="off" id="movedAmount" [(ngModel)]="movedAmount" ngModel placeholder="Enter Amount"
+            (keyup)="validate(movedAmount)" name="movedAmount" class="form-control" required style="width:416px"
+            autocomplete="off">
+        </div>
+        <br />
+        <div class="input-group">
+          <input autocomplete="off" id="address" [(ngModel)]="address" ngModel placeholder="Enter Address"
+            (keyup)="validate(address)" name="address" class="form-control" required style="width:416px">
+        </div>
+        <br />
+        <div class="input-group" *ngIf="destinationRipple">
+          <input autocomplete="off" id="destination_tag" [(ngModel)]="destination_tag" ngModel
+            placeholder="Enter Destination Tag" (keyup)="validate(destination_tag)" name="destination_tag"
+            class="form-control" required style="width:416px">
+        </div>
+        <br *ngIf="destinationRipple">
+        <div class="input-group">
+          <input autocomplete="off" id="googleAuth" placeholder="Enter Google Auth" ngModel [(ngModel)]="authToken"
+            name="googleAuth" class="form-control" required style="width:416px" autocomplete="off">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" [disabled]="moveDisable" (click)="moveWalletAmount()">Move</button>
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">Cancel</button>
+  </div>
+  <!-- <a style="margin-left: 16px; margin-bottom: 5px;font-size: 14px;" [routerLink]="['/liquidity/liquidity-management']"
+    (click)="modalRef.close()">
+    or manage new External Wallet from Setting</a> -->
+</ng-template>
+
+<ng-template #content1 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" style="margin-left:136px;">Deposit to {{currencyType}} Wallet</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group" style="margin-left:101px;">
+      <h5 style="margin-left:49px;">Scan Below QR Code</h5> <br />
+      <qrcode [qrdata]="currencyWalletQrCode" [size]="256" [level]="'M'"></qrcode>
+    </div>
+    <br />
+    <div class="form-group" style="text-align: center;">
+      <h5>or copy below address to deposit in it</h5><br />
+      <h6 style="margin-left:49px;" style="cursor: pointer;" (click)='copyToClipboard(currencyWalletQrCode)'>{{currencyWalletQrCode}}</h6>
+    </div>
+  </div>
+  <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modalRef.close()">Cancel</button>
+    </div> -->
+</ng-template>

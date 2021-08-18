@@ -1,0 +1,20 @@
+.top_filters {
+    padding: 0px;
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.form-group {
+    display: inline-block;
+    padding-right: 10px;
+    flex: 33%;
+    margin-bottom: 15px;
+}
+.alert-danger {
+    margin-top: 15px;
+}
+.btn-secondary{
+    padding: 4px 12px !important;
+}

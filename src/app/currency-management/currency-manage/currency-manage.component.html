@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-lg-12 curncy-section"  >
+    <div  *ngFor="let list of currencyManageList" class="currency_block">
+      <div>
+        <div class="currency_block_inner">          
+          <div class="currency_label">
+            <label>{{ list.currency_name }}</label>          
+          </div>         
+          <div class="currency_label text-center" style="padding: 0px;">
+              <i class="comn_currency_icon {{ list.currency_symbol }}"></i>
+          </div>
+        </div>
+        <div class="set_limit_sec">
+          <button type="button" (click)=onEdit(list) class="btn btn-secondary">Set Limit</button>
+        </div>
+        <div class="trade_limit">
+          <div class="trade_limit_blocks">
+            <label>Min Withdraw Amount: {{list.minWithdrawAmount}}</label><br />
+            <label>Withdrawl Limit With Kyc: {{list.withdrawLimitKyc}}</label><br />
+            <label>Withdrawl Limit Without Kyc: {{list.kyc_max_withd_without}}</label><br />
+            <label>Withdraw Fee: {{list.withdrawFee}}</label></div>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Google Authenticator</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form #f= "ngForm" (ngSubmit)="SubmitPassword(f)">
+    <div class="modal-body">
+      <div class="form-group">
+        <input autocomplete="off" required ngModel minlength="2" name = "token"  #token ="ngModel" type="text" class="form-control" placeholder="Enter your token here" 
+          [(ngModel)]="googleAuth" maxlength="50">
+        <p class="text-danger" *ngIf="token.touched && !token.valid">
+          <span *ngIf = "token.errors.required" >Token is required</span>
+          <span *ngIf = "token.errors.minlength" >Minimum {{token.errors.minlength.requiredLength}}  chracter is required</span>
+        </p>
+      </div>
+      <p style="margin-top:10px">If not set Google Authentication <a (click)="closePopup()" [routerLink]="['/admin-dashboard-section/admin-profile']">click here </a> to enable.
+
+      <!-- <div class="form-group">
+        <input required class="form-control" #adminpassword="ngModel" [(ngModel)]="password" name="password" type="password" maxlength="20">
+        <div *ngIf="adminpassword.invalid && (adminpassword.dirty || adminpassword.touched)" class="alert alert-danger">
+          <div *ngIf="adminpassword.errors.required"> Password is required. </div>
+        </div>
+      </div> -->
+    </div>
+    <div class="modal-footer">
+      <input [disabled]="!f.valid" class="btn btn-outline-primary" type="submit" placeholder="Submit" value="Submit">
+      <!-- <button type="button" class="btn btn-secondary" (click)="SubmitPassword()">Submit</button> -->
+    </div>
+  </form>
+</ng-template>

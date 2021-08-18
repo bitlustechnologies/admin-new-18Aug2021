@@ -1,0 +1,57 @@
+[
+    {
+        "currency":"BTC",
+        "fee": "0.1%"
+    },
+    {
+        "currency":"LTC",
+        "fee": "0.1%"
+    },
+    
+    {
+        "currency":"ZAR",
+        "fee": "0.2%"
+    },
+    
+    {
+        "currency":"BTC",
+        "fee": "0.1%"
+    },
+    
+    {
+        "currency":"BTC",
+        "fee": "0.1%"
+    },
+    
+    {
+        "currency":"BTC",
+        "fee": "0.1%"
+    },
+    
+    {
+        "currency":"BTC",
+        "fee": "0.1%"
+    },
+    
+    {
+        "currency":"BTC",
+        "fee": "0.1%"
+    },
+    
+    {
+        "currency":"BTC",
+        "fee": "0.1%"
+    },
+    
+    {
+        "currency":"BTC",
+        "fee": "0.1%"
+    },
+    
+    {
+        "currency":"BTC",
+        "fee": "0.1%"
+    }
+    
+    
+]

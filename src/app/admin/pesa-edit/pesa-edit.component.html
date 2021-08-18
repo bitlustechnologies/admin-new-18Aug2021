@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-sm-12">
+      <div class="card card-body">
+          <form #pesaForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="editPesa(pesaForm)">
+              <div class="form-group">
+                  <label>Account Number</label><br />
+                  <input autocomplete="off" id="account_number" value="" name="account_number" class="form-control" required  [(ngModel)]="bankModel.account_number" #account_number="ngModel" style="width: 295px;" >
+                  <div *ngIf="account_number.invalid && (account_number.dirty || account_number.touched)" class="alert alert-danger"  style="width: 295px;">
+                      <div *ngIf="account_number.errors.required">Account Number is required. </div> 
+                  </div>
+              </div> 
+              <div class="form-group">
+                <label>Country Code</label><br />
+                <select  required [(ngModel)] = "bankModel.country_code"  #country_code="ngModel" name="country_code" class="form-control" id="country_code" style="width:31%">
+                  <option  [value]="code.id" *ngFor = "let code of countryCodeList">{{ code.phonecode }}</option>
+                </select> 
+                  <div *ngIf="country_code.invalid && (country_code.dirty || country_code.touched)" class="alert alert-danger"  style="width: 295px;">
+                      <div *ngIf="country_code.errors.required">Country code is required. </div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label>Phone Number</label><br />
+                  <input autocomplete="off" id="phone_number" value="" name="phone_number" class="form-control" required  [(ngModel)]="bankModel.phone_number" #phone_number="ngModel" style="width: 295px;" >
+                  <div *ngIf="phone_number.invalid && (phone_number.dirty || phone_number.touched)" class="alert alert-danger"  style="width: 295px;">
+                      <div *ngIf="phone_number.errors.required">Phone number is required. </div>
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-danger" [disabled]="pesaForm.invalid">Submit</button>
+              <button type="button" class="btn btn-inverse" [routerLink]="['/admin/banks']" style="margin-left:10px;">Back</button>
+          </form>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="table-responsive">
+<table class="table">
+    <thead>
+      <tr>
+        <th>Txid</th>
+        <th>Address From</th>
+        <th>Address TO</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- container="body" placement="right" [ngbPopover]="list.txid" #p="ngbPopover" (document:click)="p.close()" (click)="$event.stopPropagation()" -->
+        <tr *ngFor="let list of transaction">
+          <td style="cursor:pointer" [title]="list.txid"  (click)='copyToClipboard(list.txid)'>{{(list.txid.length>15)? (list.txid | slice:0:15)+'...':(list.txid)}}</td>
+          <td style="cursor:pointer" [title]="list.address_from" (click)='copyToClipboard(list.address_from)'>{{(list.address_from.length>15)? (list.address_from | slice:0:15)+'...':(list.address_from)}}</td>
+          <td style="cursor:pointer" [title]="list.address_to" (click)='copyToClipboard(list.address_to)'>{{(list.address_to.length>15)? (list.address_to | slice:0:15)+'...':(list.address_to)}}</td>
+          <td><div class="address_div">{{list.amount}}</div></td>
+          <td><div class="address_div">{{list.created_date | date:'MMM d, y, h:mm:ss a'}}</div></td>
+          <td><div class="address_div">{{list.status == 'signed'? 'Pending':list.status}}</div></td>
+        </tr>
+        <tr *ngIf="transaction.length<=0">
+          <td colspan="6" style="text-align:center;">No Record found</td>
+        </tr> 
+    </tbody>
+  </table>
+</div>

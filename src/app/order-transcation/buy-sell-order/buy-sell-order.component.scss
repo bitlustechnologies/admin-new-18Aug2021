@@ -1,0 +1,88 @@
+.cuseye {
+  font-size: 20px;
+}
+.form-control {
+  width: 254px;
+  margin-bottom: 10px;
+}
+.top_filters {
+  padding: 0px;
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  li {
+    display: inline-block;
+    margin-right: 10px;
+    flex: 33%;
+    label {
+      float: left;
+      width: 100%;
+      color: #666666;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    button {
+      background-color: #0fc776;
+      color: #fff;
+      border-color: #0fc776;
+      box-shadow: none;
+    }
+    input {
+      font-size: 14px;
+    }
+    &:last-child {
+      margin-right: 0px;
+    }
+    &.date {
+      max-width: 70%;
+    }
+    .btn {
+      height: 38px;
+    }
+  }
+}
+
+.trade_filter_sec {
+  .col {
+    padding-left: 0px;
+  }
+}
+.pointer {
+  cursor: pointer;
+}
+.btnAccepted {
+  width: 36px;
+  height: 31px;
+  display: inline-block;
+  background-image: url('../../../assets/images/accept_decline.png');
+  background-repeat: no-repeat;
+  margin-bottom: 0px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  &.accept {
+    background-position: 0 0;
+  }
+  &.decline {
+    background-position: -45px 0;
+  }
+}
+
+.deposit_action {
+  padding: 0px;
+  margin: 0px;
+  li {
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+}
+.btnFiltr {
+  margin-bottom: -14px;
+  margin-left: 20px;
+}

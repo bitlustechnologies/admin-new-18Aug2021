@@ -1,0 +1,35 @@
+.cuseye {
+	font-size: 20px;
+}
+.form-control{
+	width: 254px;
+    margin-bottom: 10px;
+}
+.top_filters {
+    padding: 0px;
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    li {
+        display: inline-block;
+        margin-right: 10px;
+        flex: 33%;
+        label {
+            float: left;
+            width: 100%;
+        }
+        input {
+            font-size: 14px;
+        }
+        &:last-child {
+            margin-right: 0px;
+        }
+        &.date {
+            max-width: 70%;
+        }
+        .btn {
+            height: 38px;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-sm-3">  
+    </div>
+    <div class="col-sm-6">
+        <div class="card card-body">
+            <form #userForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="DisableGoogleAuth(userForm)">
+              
+                <div class="form-group">
+                    <label>Enter Token To Disable Google Authenticator</label><br />
+                    <input id="verifyToken" name="verifyToken"  type="text" class="form-control" required  ngModel #verifyToken="ngModel" style="width: 100%;" autocomplete="off">
+                    <div *ngIf="verifyToken.invalid && (verifyToken.dirty || verifyToken.touched)" class="alert alert-danger">
+                        <div *ngIf="verifyToken.errors.required"> Token is required. </div>
+                    </div>
+                </div>
+        
+                <button type="submit" class="btn btn-danger" [disabled]="userForm.invalid || disableBtn">Update</button>
+                <button type="button" class="btn btn-inverse" [routerLink]="['/admin-dashboard-section/admin-profile']" style="margin-left:10px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-3">    
+    </div>
+</div>
+<!-- /.row -->
+<!-- Row -->

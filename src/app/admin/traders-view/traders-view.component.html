@@ -1,0 +1,219 @@
+<div class="row">
+  <div class="card" style="width:100%">
+    <div class="card-body">
+      <ngb-tabset>
+        <ngb-tab title="Personal Detail">
+          <ng-template ngbTabContent>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <small class="text-muted">Name</small>
+                  <span><i style="cursor: pointer;" class="mdi mdi-grease-pencil" (click)='OpenModalName()'> </i></span>
+                  <h6>{{traderDetail?.first_name}} {{traderDetail?.last_name}}</h6>
+                </div>
+                <div class="col-md-4">
+                  <small class="text-muted">Date of Birth </small>
+                  <h6 *ngIf="traderDetail?.dob != '0000-00-00'">{{traderDetail?.dob |date: 'dd/MM/yyyy'}}</h6>
+                </div>
+                <div class="col-md-4">
+                      <small class="text-muted">Email address </small><span><i style="cursor: pointer;" class="mdi mdi-grease-pencil" (click)='OpenModal()'> </i></span>
+                  <h6>{{traderDetail?.email}}</h6>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <small  class="text-muted">Phone Number </small><span><i style="cursor: pointer;" class="mdi mdi-grease-pencil" (click)='OpenModal()'> </i></span>
+                  <h6>{{traderDetail?.phone}}</h6>
+                </div>
+                <div class="col-md-4">
+                  <small class="text-muted">Address</small>
+                  <h6>{{traderDetail?.address}}</h6>
+                </div>
+                <div class="col-md-4">
+                  <small class="text-muted">City</small>
+                  <h6>{{traderDetail?.city}}</h6>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <small class="text-muted">State</small>
+                  <h6>{{traderDetail?.state}}</h6>
+                </div>
+                <div class="col-md-4">
+                  <small class="text-muted">Country</small>
+                  <h6>{{traderDetail?.country}}</h6>
+                </div>
+                <div class="col-md-4">
+                  <small class="text-muted">ZipCode</small>
+                  <h6>{{traderDetail?.zipcode}}</h6>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <small class="text-muted">Joining Date</small>
+                  <h6>{{traderDetail?.joining_date | date: 'dd/MM/yyyy'}}</h6>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle><b>Verification</b></ng-template>
+          <ng-template ngbTabContent>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <small class="text-muted">ID Type</small>
+                  <h6>{{traderDetail?.id_type}}</h6>
+                </div>
+                <div class="col-md-4">
+                  <small class="text-muted db">1st Level KYC </small>
+                  <h6 *ngIf="traderDetail?.first_level_kyc==0">Pending</h6>
+                  <h6 *ngIf="traderDetail?.first_level_kyc>0">Completed</h6>
+                </div>
+                <div class="col-md-4">
+                  <small class="text-muted db">2nd Level KYC(Cancelled cheque/Passbook Front page)</small>
+                  <h6 *ngIf="traderDetail?.second_level_kyc==0">Pending</h6>
+                  <h6 *ngIf="traderDetail?.second_level_kyc>0">Completed</h6>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <small class="text-muted db">KYC Status</small>
+                  <h6 *ngIf="traderDetail?.kyc_status==0">Inactive</h6>
+                  <h6 *ngIf="traderDetail?.kyc_status==1">Active</h6>
+                  <h6 *ngIf="traderDetail?.kyc_status==2">Rejected</h6>
+                </div>
+                <div class="col-md-4"
+                  *ngIf="traderDetail?.kyc_status==2 || (traderDetail?.kyc_status==0 && traderDetail?.kyc_reject_reason != Null)">
+                  <small class="text-muted db">Rejected Reason</small>
+                  <h6>{{traderDetail?.kyc_reject_reason}}</h6>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle><b>User History</b></ng-template>
+          <ng-template ngbTabContent>
+            <div class="card-body" *ngFor="let list of userHistory">
+              <strong>{{ list?.currency_symbol | uppercase }}</strong>
+              <br />
+              <div class="row">
+                <div class="col-md-2">
+                  <small class="text-muted" style="float:left;">Total Deposits</small>
+                  <h6 style="padding-left: 103px;margin-top: 2px;">{{ list?.deposit}}</h6>
+                </div>
+                <div class="col-md-2">
+                  <small class="text-muted" style="float:left;">Total Withdraw</small>
+                  <h6 style="padding-left: 103px;margin-top: 2px;">{{ list?.withdraw}}</h6>
+                </div>
+                <div class="col-md-2">
+                  <small class="text-muted" style="float:left;">Total Buy</small>
+                  <h6 style="padding-left: 103px;margin-top: 2px;">{{ list?.buy_order}}</h6>
+                </div>
+                <div class="col-md-2">
+                  <small class="text-muted" style="float:left;">Total Sell</small>
+                  <h6 style="padding-left: 103px;margin-top: 2px;">{{ list?.sell_order}}</h6>
+                </div>
+                <div class="col-md-2">
+                  <small class="text-muted" style="float:left;">Balance</small>
+                  <h6 style="padding-left: 103px;margin-top: 2px;">{{ list?.balance}}</h6>
+                </div>
+              </div>
+              <hr>
+            </div>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</div>
+
+<ng-template #content2 let-modal>
+  <div class="modal-header">
+  <h4>Update Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<form #updateForm="ngForm" (ngSubmit)='updateEmailOrPassword(updateForm)'>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Email</label><br/>
+      <input   name="editEmailAddress" type="text" #email = "ngModel" (keyup)='checkValidationEmail($event.target.value)' pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control"
+          required [(ngModel)]="editEmailAddress" autocomplete="off">
+          <div *ngIf="email.touched" class="text-danger">
+            <p *ngIf="email.errors?.required">Email is a required field!</p>
+            <p *ngIf="email.errors?.pattern">This is not a valid Email!!!</p>
+          </div>
+    </div>
+
+    <div class="form-group">
+      <label>Phone Code</label>
+      <select  style="font-size: 11px;"  class="form-control custom-select" (change)="selectedCode(phone_code)"  name="phone_code" [(ngModel)]="phone_code">
+          <option selected [value]="phone_code">{{phone_code}}</option>
+          <option  *ngFor="let list of phoneCode"  [ngValue]="list">{{list.phonecode}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number</label><br/>
+      <input  name="editPhoneNumber"  type="text" class="form-control"
+          required [(ngModel)]="editPhoneNumber" pattern="[0-9]+$" (keyup)='checkValidatonsPhone($event.target.value)'  #phoneNumber='ngModel' autocomplete="off" minlength="10" maxlength="10">
+          <div *ngIf="phoneNumber.touched " class="text-danger">
+            <p *ngIf="phoneNumber.errors?.required">Phone number is a required field!</p>
+            <p *ngIf="phoneNumber.errors?.minlength">Minlength should be 10 characters</p>
+            <p *ngIf="!phoneNumber.errors?.minlength && phoneNumber.errors?.pattern">Only numeric characters allowed</p>
+
+          </div>
+    </div>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-secondary" [disabled]='!updateButtonDisable'>Update</button>
+</div>
+</form>
+  
+</ng-template>
+
+
+<ng-template #content5 let-modal>
+  <div class="modal-header">
+  <h4>Update Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<form #updateForm="ngForm" (ngSubmit)='updateName(updateForm)'>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>First Name</label><br/>
+      <input   name="personalDetailsFistName" minlength="2" maxlength="35" type="text" #fname = "ngModel" (keyup)='checkValidationEmail($event.target.value)' class="form-control"
+          required [(ngModel)]="personalDetailsFistName" autocomplete="off" >
+          <div *ngIf="fname.invalid && (fname.dirty || fname.touched)"
+          class="alert alert-danger">
+          <div *ngIf="fname.errors.required"> First Name is required. </div>
+          <div *ngIf="fname.errors.minlength"> Minimum
+              {{fname.errors.minlength.requiredLength}} chracters are required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Last Name</label><br/>
+      <input   name="personalDetailsLastName" minlength="2" maxlength="35" type="text" #lname = "ngModel" (keyup)='checkValidationEmail($event.target.value)' class="form-control"
+          required [(ngModel)]="personalDetailsLastName" autocomplete="off" >
+          <div *ngIf="lname.invalid && (lname.dirty || lname.touched)"
+          class="alert alert-danger">
+          <div *ngIf="lname.errors.required"> Last Name is required. </div>
+          <div *ngIf="lname.errors.minlength"> Minimum
+              {{lname.errors.minlength.requiredLength}} chracters are required</div>
+      </div>
+    </div>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-secondary" >Update</button>
+</div>
+</form>
+  
+</ng-template>

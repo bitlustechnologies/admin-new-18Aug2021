@@ -1,0 +1,62 @@
+<div class="row">
+  <!-- column -->
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <!-- <h4 class="card-title">Choose Currency Pair</h4> -->
+               <div>
+                   <div> <label style="float: right;">Total Users: 11</label></div>
+                  <div class="col" style="margin-bottom: 30px;">
+                       
+                        <input placeholder="FromDate" type="date" name="fromdate"  class="form-control" style="width:19%;">
+                        <input placeholder="ToDate" type="date"  name="todate"  class="form-control" style="width:19%;margin-left:10px;">
+                        <input style="width:10%;margin-left:10px;" type="text" class="form-control">
+                        <input style="width:10%;margin-left:10px;" type="text" class="form-control">
+                      
+                        <select class="form-control custom-select" style="width:20%;margin-left:10px">
+                            <option value="0">Select Country</option>
+                            <option value="1">India</option>
+                            <option value="2">US</option>
+                            <option value="3">Australia</option>
+                        </select>
+                        
+                        <button type="button" class="btn btn-secondary" style="margin-left:10px;height: 36px;width: 88px;" ng-click="GetBuyDetails()">Search</button>
+                        
+                    </div>
+                   
+              </div>    
+              <ngx-datatable
+                  #table
+                  class='material'
+                  [columnMode]="'force'"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [rowHeight]="'auto'"
+                  [limit]="10"
+                  [rows]='rows'> 
+                  <ngx-datatable-column name="SRNo">
+                      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>{{value}} </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Name">
+                      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>{{value}} </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Email">
+                      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>{{value}} </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Address">
+                       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>{{value}} </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Action">
+                          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                              <a target="_blank" [routerLink]="['/traders-management/traders-view/1']"> <i class="ti-eye text-warning m-r-10"></i></a>
+                       
+                          </ng-template>
+                          
+                   </ngx-datatable-column>
+                </ngx-datatable>
+               
+          </div>
+      </div>
+  </div>
+
+</div>

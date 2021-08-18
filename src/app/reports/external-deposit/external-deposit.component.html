@@ -1,0 +1,167 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+<div *ngIf="tab.activeId==='tab-selectbyid1'">
+  <form [formGroup]="searchForm" class="form-horizontal m-t-30 filterSearchForm" (ngSubmit)="FilterDeposits(searchForm)">
+    <div class="col" style="margin-bottom: 30px;">
+        <ul class="top_filters">
+            <li>
+                <label>Select Currency</label>
+                <select class="form-control custom-select" formControlName="currency_id" [(ngModel)]="depositSearchModel.currency_id" style="width:75%">
+                    <option value="">All</option>
+                    <option [value]="currency.currency_id" *ngFor="let currency of allAdminCurrency">{{currency.currency_symbol | uppercase}}</option>
+                </select>
+            </li>
+            <li>
+                <label>Select Currency Type</label>
+                <select class="form-control custom-select" formControlName="type" [(ngModel)]="depositSearchModel.type" style="width:75%">
+                    <option value="">All</option>
+                    <option value="Fiat" >Fiat</option>
+                    <option value="Crypto" >Crypto</option>
+                </select>
+            </li>
+            <!-- <li style="margin-left: -20px;">
+                <label>Zedxe Id</label>
+                <input type="text" class="form-control" style="width:96%">
+            </li> -->
+        </ul>      
+    </div>
+    <div class="col" style="margin-bottom: 30px;">
+        <ul class="top_filters">
+            <li class="date">
+                <label>From</label>
+                <input  placeholder="FromDate" type="date" name="fromDate" formControlName="fromDate" [(ngModel)]="depositSearchModel.fromDate" style="width:75%" class="form-control"  >
+            </li>
+            <li class="date">
+                <label>To</label>
+                <input autocomplete="off" placeholder="ToDate" formControlName="toDate" [(ngModel)]="depositSearchModel.toDate" type="date"  name="toDate" style="width:75%" class="form-control date">
+            </li>
+            
+        </ul>  
+    </div>
+    <div class="col" style="margin-bottom: 30px;">
+        <ul class="top_filters">
+            <li>
+                <label>&nbsp;</label>
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </li>
+        </ul> 
+    </div>
+</form> 
+</div>
+
+          <ngb-tabset (click)="changeTab($event)" #t="ngbTabset">
+            <ngb-tab id="tab-selectbyid1" title="Manual Deposit">
+              <ng-template ngbTabContent>
+                <div class="card-body">
+                  <!-- <h4 class="card-title">Choose Currency Pair</h4> -->
+                  <!-- <div class="col" style="margin-bottom: 10px;">
+                    <a  style="cursor:pointer"  (click)="DownloadCSV()"> <i class="mdi mdi-arrow-down-box pointer"> </i>Download CSV file</a>
+                  </div> -->
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>TxId/Address</th>
+                          <th>Currency</th>
+                          <th>Amount</th>
+                          <th>Type</th>
+                          <th>Created Date</th>
+                          <th>Edit/Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let list of manualDeposit | paginate: { itemsPerPage: 10, currentPage: pageNo ,totalItems:totalRecords} let i = index">
+                          <td *ngIf="i<9">{{pageNo-1}}{{i+1}} </td>
+                          <td *ngIf="pageNo===1 &&  i===9">{{i+1}} </td>
+                          <td *ngIf="pageNo!=1 && i===9">{{pageNo}}{{0}}</td>
+                          
+
+                          <td>{{list.txid_address}}</td>
+                          <td>{{list.currency_symbol | uppercase}}</td>
+                          <td>{{list.amount}}</td>
+                          <td>{{list.type}}</td>
+                          <td>{{list.created_at | date :"short"}}</td>
+                          <td>
+                            <a  (click)=editManualdeposit(list,list.i) class="editGreen"> <i class="mdi mdi-grease-pencil"> </i></a>|
+                            <a (click)="delete(list.id)"> <i class="fa fa-trash-o"> </i></a>
+                          </td>
+                        </tr>
+                        <tr *ngIf="empty">
+                          <td colspan="3">No Record found</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="pull-right" *ngIf="!empty">
+                      <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                  </div>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab id="tab-selectbyid2"> 
+              <ng-template ngbTabTitle>
+                <b>{{title}} Deposit</b>
+              </ng-template>
+                <ng-template ngbTabContent>
+                  <div class="card-body">
+                     <form [formGroup]="form" (ngSubmit) = 'getDetails(form)'>
+                       <div class="form-group">
+                        <label style="width: 200px;">TxId/Address</label>
+                         <input class="form-control" type="text" placeholder="Please enter txid/address" formControlName="txidAddress" style="width: 295px;" >
+                       </div>
+                       <div class="form-group">
+                          <label style="width: 200px;">Amount</label>
+                          <input class="form-control" type="text" placeholder="Please enter amount" formControlName="amount" style="width: 295px;" >
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 200px;">Type</label>
+                            <select  class="form-control" formControlName="type" name="type"  style="width: 295px;" (change)="selectType($event.target.value)">
+                              <option value="A" disabled>Please select type</option>
+                                <option value="FIAT">FIAT </option>
+                                <option value="CRYPTO">CRYPTO</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label style="width: 200px;">Currency</label>
+                            <select  class="form-control" formControlName="currency" name="type" style="width: 295px; " (change)="selectCurrency($event.target.value)">
+                              <option value="A" disabled>Please select currency</option>
+                                <option [value]="item.currency_id"  *ngFor="let item of allAdminCurrency">{{item.currency_name | uppercase}}</option>
+                            </select>
+                        </div>
+                        <button *ngIf="title == 'Add New'" type="submit" style="padding: 7px 12px !important;" class="btn btn-secondary">{{submit}}</button>
+                        <button *ngIf="title == 'Edit Manual'" type='submit' style="padding: 7px 12px !important;" class="btn btn-secondary">{{submit}}</button>
+                     </form>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+
+         
+
+          </div>
+        </div>
+
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <!-- <h4 class="modal-title" id="modal-basic-title">Profile update</h4> -->
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <!-- <label for="dateOfBirth">Date of birth</label> -->
+        <div class="input-group">
+          <h4>Do you really want to Delete?</h4>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="deleteDepositManual()">Yes</button>
+  </div>
+</ng-template>

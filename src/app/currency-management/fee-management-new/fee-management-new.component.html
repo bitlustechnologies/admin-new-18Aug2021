@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-body">
+            <form #userForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="CreateUser(userForm)">
+                <div class="form-group">
+                    <label>Select Currency</label><br />
+                    <select class="form-control custom-select" style="width:16%">
+                        <option value="1">BTC</option>
+                        <option value="2">ETH</option>
+                        <option value="3">ZAR</option>
+                   
+                      </select>
+                </div>
+              <div class="form-group">
+                    <label>Fee(%)</label><br />
+                    <input autocomplete="off" style="width: 162px;"  id="fee" name="fee" class="form-control" required  [(ngModel)]="newUser.fee" #fee="ngModel">
+                    <div *ngIf="fee.invalid && (fee.dirty || fee.touched)" class="alert alert-danger">
+                        <div *ngIf="fee.errors.required"> Fee is required. </div>
+                    </div>
+                </div>
+             
+                <button type="submit" class="btn btn-danger" [disabled]="userForm.invalid">Submit</button>
+                <button type="button" class="btn btn-inverse" [routerLink]="['/currency-management/fee-management']" style="margin-left:10px;">Back</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+<!-- Row -->

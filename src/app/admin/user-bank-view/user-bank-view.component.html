@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div style="margin-bottom:10px;">
+    <button class="btn btn-secondary" (click) ="approveAllBankModal(member_id,'APPROVED')">Approve All</button>
+            <button class="btn btn-danger" style="margin-left:10px" (click) ="approveAllBankModal(member_id,'DISAPPROVED')">Disapprove All</button> 
+            <!-- <button class="btn btn-danger" style="margin-left:10px" (click) ="deleteAllUserbank(member_id,'DELETE')">Delete All</button>  -->
+          </div>
+      <div class="card" *ngFor="let item of userBankList">
+          <div class="card-body" style="position:relative;" >
+            <div style="    position: absolute; right: 19px; top: 17px;">
+              <button class="btn btn-secondary" (click)='updateBankDetails(item.id)'>Edit</button>
+              <button class="btn btn-danger" style="margin-left:10px" (click)='openDeleteModal(item.id)'>Delete</button>
+            </div>
+              <ul>
+                <li>UserId: <span>{{item.member_id}}</span></li>
+                <li>User Name: <span>{{item.name}}</span></li>
+
+                <li>Account Number: <span>{{item.account_number}}</span></li>
+                <li>Bank: <span>{{item.bank}}</span></li>
+                <li>Branch: <span>{{item.branch_name}}</span></li>
+                <li>IFSC Code: <span>{{item.ifsc_code}}</span></li>
+                <li>Cancelled Cheque/Passbook Front Page: <span style="display: block;
+                  margin-bottom: 15px;
+                  margin-top: 5px;"><a [href]=item.file_path target="_blank"><img [src]=item.file_path alt="img" width="170px" height="100px"></a></span></li>
+                <li>Status:<button style="margin-left: 15px;" *ngIf="item.isApproved == 0" class="btn btn-secondary" (click)="OpenModal(item.id,'APPROVED')">Approve</button> <button  class="btn btn-danger" style="margin-left:10px" *ngIf="item.isApproved == 0"  (click)="OpenModal(item.id,'DISAPPROVED')">Disapprove</button ><span style="margin-left: 15px; font-weight: 600;" *ngIf="item.isApproved != 0">{{item.isApproved == 1 ?'Approved':'Disapproved'}}</span></li>
+                  <li  *ngIf="item.isApproved == 2">Reason: <span style="color:rgb(245, 100, 100)">{{item.reason}}</span></li>
+              </ul>
+            
+          </div>
+        </div>
+  </div>
+</div>
+<ng-template #content2 let-modal>
+  <div class="modal-header">
+  <h4></h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+   <h4>Do you really want to {{modalStatus == 'APPROVED'?'Approve':'Disapprove'}} ?</h4>
+   <span style="width:100%" *ngIf="modalStatus != 'APPROVED'">
+    <textarea maxlength="400" ngModel #reason ="ngModel" [(ngModel)]="reasonDisapprove" name="reason_dis" type="text" class="form-control m-t-10 m-b-10"  placeholder="Please enter reason" style="width:100%"></textarea>
+  </span>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)='approveOrDisaproveModal()' [disabled]='modalStatus != "APPROVED" && reasonDisapprove ==""'>Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">No</button>
+
+  </div>
+</ng-template>
+
+<ng-template #content3 let-modal>
+  <div class="modal-header">
+  <h4></h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+   <h4>Do you really want to {{AllapprovedOrDisApprovedStatus == 'APPROVED'?'Approve':'Disapprove'}} all banks ?</h4>
+   <span style="width:100%" *ngIf="AllapprovedOrDisApprovedStatus != 'APPROVED'">
+    <textarea maxlength="400" ngModel #reason ="ngModel" [(ngModel)]="reasonDisapprove" name="reason_dis" type="text" class="form-control m-t-10 m-b-10"  placeholder="Please enter reason" style="width:100%"></textarea>
+  </span>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)='approveOrDisapprovemodal()' [disabled]='AllapprovedOrDisApprovedStatus != "APPROVED" && reasonDisapprove ==""'>Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">No</button>
+
+  </div>
+</ng-template>
+
+<ng-template #content4 let-modal>
+  <div class="modal-header">
+  <h4></h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+   <h4>Do you really want to Delete bank ?</h4>
+   <span style="width:100%">
+    <textarea maxlength="400" ngModel #reason ="ngModel" name="reason_dis" [(ngModel)]="reasonDisapprove" type="text" class="form-control m-t-10 m-b-10"  placeholder="Please enter reason" style="width:100%"></textarea>
+  </span>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)='deleteUserBank(deleteModalId)' [disabled]='reasonDisapprove == ""'>Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="modalRef.close()">No</button>
+
+  </div>
+</ng-template>

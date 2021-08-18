@@ -1,0 +1,147 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div class="row">
+  <!-- column -->
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <form #searchForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="FilterDeposits(searchForm)">
+              <div class="col" style="margin-bottom: 30px;">
+                <ul class="top_filters">
+                  <li class="date">
+                    <label>From</label>
+                    <input autocomplete="off" placeholder="FromDate" type="date" name="fromDate" class="form-control"
+                      [(ngModel)]="depositSearchModel.fromDate">
+                  </li>
+                  <li class="date">
+                    <label>To</label>
+                    <input autocomplete="off" placeholder="ToDate" type="date" name="toDate" class="form-control date"
+                      [(ngModel)]="depositSearchModel.toDate">
+                  </li>
+                  <li>
+                    <button type="submit" class="btn btn-secondary" style="margin-top: 9px;">Search</button>
+                  </li>
+                </ul>
+              </div>
+              <div class="col" style="margin-bottom: 10px;">
+                <a style="cursor:pointer" (click)="showAll()"> Show All</a>
+                |
+                <a style="cursor:pointer" (click)="DownloadCSV(userlists); searchForm.reset();"> <i
+                    class="mdi mdi-arrow-down-box pointer"> </i>Download CSV file</a>
+                <label style="float: right;">Total Deposits: {{totalRecords}}</label>
+
+              </div>
+            </form>
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <!-- <th>Txn ID</th> -->
+              <th>Email</th>
+              <th>User Id</th>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Order Id</th>
+              <th>Currency</th>
+              <th>Submitted Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let list of userlists | paginate: { itemsPerPage: 10, currentPage: page ,totalItems:totalRecords}">
+              <!-- <td><span title="{{list.transaction_id}}">{{(list.transaction_id.length>15)? (list.transaction_id | slice:0:15)+'...':(list.transaction_id)}}</span></td> -->
+              <td>{{list.email}}</td>
+              <td>{{list.member_id}}</td>
+              <td>{{list.first_name}} {{list.last_name}}</td>
+              <td>{{list.amount | bankdepositExponent:2}}</td>
+              <td>
+                {{list.refrence_number}}
+              </td>
+              <td>
+                {{list.currency_symbol | uppercase}}
+              </td>
+              <td>
+                {{list.created_at | date:'short'}}
+              </td>
+              <td>
+                <a style="cursor: pointer;" *ngIf="list.transaction_receipt != null && list.transaction_receipt !==''"
+                  target="_blank" (click)='openReceiptImage(list.transaction_receipt)'><i
+                    class="ti-eye text-info m-r-10">
+                    <!-- <img src={{list.transaction_receipt_file_id}} /> -->
+                  </i></a>
+
+                <button *ngIf="list.txstatus == 'PENDING' || list.txstatus == 'OPEN' " type="button"
+                  (click)="changeApprove(approve)" class="btn btn-primary  btn-sm"
+                  style="margin-left:5px;margin-bottom:10px">Approve</button>
+                <button *ngIf="list.txstatus == 'PENDING' || list.txstatus == 'OPEN' " type="button"
+                  (click)="changeApprove(disapprove)" class="btn btn-primary btn-sm"
+                  style="margin-left:5px;margin-top:-11px;">Disapprove</button>
+                <span *ngIf="list.txstatus != 'OPEN' && list.txstatus != 'PENDING'">{{list.txstatus}} </span>
+                <ng-template #approve let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Approve Deposit Request</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Do you want to approve this deposit request ?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" [disabled]="btnDis" (click)="changeStatus(list.id,'APPROVED')"
+                      class="btn btn-secondary">Yes</button>
+                    <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                  </div>
+                </ng-template>
+                <ng-template #disapprove let-c="close" let-d="dismiss">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Disapprove Deposit Request</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Do you want to disapprove this deposit request ?</p>
+                    <span>
+                      <textarea maxlength="400" ngModel #reason="ngModel" name="reason_dis" type="text"
+                        class="form-control m-t-10 m-b-10" placeholder="Please enter reason"
+                        style="width:100%"></textarea>
+                    </span>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" [disabled]="btnDis" (click)="changeStatus(list.id,'REJECTED', reason.value)"
+                      class="btn btn-secondary">Yes</button>
+                    <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                  </div>
+                </ng-template>
+              </td>
+            </tr>
+            <tr *ngIf="empty">
+              <td colspan="7">Search result not found</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pull-right" *ngIf="!empty">
+          <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Receipt Image</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="text-align: center;">
+    <img style="width:350px;height: 200;" [src]="receiptImage" alt="">
+  </div>
+
+</ng-template>

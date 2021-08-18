@@ -1,0 +1,634 @@
+<div class="row">
+  <!-- column -->
+  <div class="col-lg-12">
+    <div class="card verify">
+      <div class="p-t-10 p-b-10 p-l-10" *ngIf="checkPass">
+        <form #f="ngForm" (ngSubmit)="verify(f)">
+          <div class="form-group">
+            <div class="input-group input_fld mobno_input">
+              <div class="col-md-6">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <h4>Google Authenticator</h4>
+                    <input autocomplete="off" required ngModel minlength="2" name="token" #token="ngModel" type="text"
+                      class="form-control" placeholder="Enter your token here" [(ngModel)]="googleAuth" maxlength="50">
+                    <p class="text-danger" *ngIf="token.touched && !token.valid">
+                      <span *ngIf="token.errors.required">Token is required</span>
+                      <span *ngIf="token.errors.minlength">Minimum {{token.errors.minlength.requiredLength}} chracter is
+                        required</span>
+                    </p>
+                  </div>
+                  <p style="margin-top:10px">If not set Google Authentication <a
+                      [routerLink]="['/admin-dashboard-section/admin-profile']">click here </a> to enable.
+                    <!-- <div class="form-group">
+                    <h4>Please Enter Step 1 Password</h4>
+                    <input required class="form-control" #password="ngModel" ngModel name="password" type="password" maxlength="20">
+                    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                      <div *ngIf="password.errors.required"> Password is required. </div>
+                    </div>
+                  </div> -->
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <input [disabled]="!f.valid" class="btn btn-outline-primary" type="submit" placeholder="Submit"
+                      value="Submit">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="p-t-10 p-b-10 p-l-10" *ngIf="!checkPass">
+
+        <form #searchForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="FilterWithdraws(searchForm)"
+          style="margin-left: 20px;">
+
+          <div class="col" style="margin-bottom:30px;">
+            <ul class="top_filters">
+              <li class="date">
+                <label>Date</label>
+                <input placeholder="Choose Date..." [max]="dateToday" type="date" name="date" class="form-control"
+                  [(ngModel)]="dateSelected">
+              </li>
+              <li style="margin-left: 3px;">
+                <label>Time</label>
+                <select [disabled]='isDisabledSlot' class="form-control custom-select" name="slot"
+                  [(ngModel)]="selectedTimeSlot" style="width:102%" (change)="onChange(searchForm)">
+                  <option value="" disabled>Choose Time...</option>
+                  <option value="19:30 - 09:30">19:30 - 09:30</option>
+                  <option value="09:31 - 13:30">09:31 - 13:30</option>
+                  <option value="13:31 - 16:30">13:31 - 16:30</option>
+                  <option value="16:31 - 19:30">16:31 - 19:30</option>
+                </select>
+              </li>
+              <li class="date">
+                <label>To</label>
+                <input autocomplete="off" [disabled]='isDisabledToDate' placeholder="ToDate" type="date" name="toDate"
+                  class="form-control date" [(ngModel)]="toDate" (change)="onChange(searchForm)">
+              </li>
+              <li style="margin-left: 10px;">
+                <label>&nbsp;</label>
+                <button type="submit" class="btn btn-secondary">Search</button>
+                <button style="margin-left: 10px;" type="button" class="btn btn-secondary"
+                  (click)="resetFilters()">Reset</button>
+
+              </li>
+
+
+            </ul>
+
+          </div>
+        </form>
+        <div class="col" style="margin-bottom: 10px;">
+          <a style="cursor:pointer" (click)="showAll()"> Show All</a>
+          |
+          <a style="cursor:pointer" (click)="DownloadCSV()"> <i class="mdi mdi-arrow-down-box pointer">
+            </i>Download CSV file</a>
+
+        </div>
+
+
+        <div class="card-body">
+          <ngb-tabset *ngIf="!tabsequence" (tabChange)="beforeChange($event)" #tabSet="ngbTabset" [activeId]="tab2">
+            <ngb-tab title="Crypto Withdraw" id='tabFiat'>
+              <ng-template ngbTabContent>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <!-- <th>Sr.No</th> -->
+                        <th>Email</th>
+                        <th>User Id</th>
+                        <th>Name</th>
+                        <th>Balance</th>
+                        <!-- <th>Locked Balance</th> -->
+                        <th>Amount</th>
+                        <th>Fee</th>
+                        <th>From address</th>
+                        <th>To address</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let list of userlists| paginate: { itemsPerPage: 10, currentPage: page ,totalItems:totalRecords};let i =index">
+                        <!-- <td>{{(i + 1) + (page * 10) - 10 }}</td> -->
+                        <td [title]=list.email>
+
+                          {{list.email != null && list.email != ''?(list.email | slice : 0 : 10
+                          )+".." :'-' }}
+
+                        </td>
+                        <td>
+                          {{list.member_id}}
+                        </td>
+                        <td>
+                          {{list.name}}
+                        </td>
+                        <td>
+                          {{list.balance | withdrawreqExponent:8}}
+                        </td>
+                        <!-- <td>
+                          {{list.locked_balance | withdrawreqExponent:8}}
+                        </td> -->
+                        <td>
+                          {{list.amount | withdrawreqExponent:8}} ({{list.currency_symbol | uppercase}})
+                        </td>
+                        <td>
+                          {{list.tx_fee}}
+                        </td>
+                        <td title={{list.address_from}} style="cursor: pointer;"
+                          (click)='copyToClipboard(list.address_from)'>
+                          {{list.address_from != null && list.address_from != ''?(list.address_from | slice : 0 : 10
+                          )+".." :'-' }}
+                        </td>
+                        <td title={{list.address_to}} style="cursor: pointer;"
+                          (click)='copyToClipboard(list.address_to)'>
+                          {{list.address_to != null && list.address_to != ''?(list.address_to | slice : 0 : 10 )+'..' :
+                          '-'}}
+                        </td>
+                        <td>
+                          {{list.created_at | date:'short':'+0530'}}
+                        </td>
+                        <td>
+                          <button type="button" (click)="changeApprove(approve)" class="btn btn-primary  btn-sm"
+                            style="margin-left:5px;margin-bottom:10px">Approve</button>
+                          <button type="button" (click)="changeApprove(disapprove)" class="btn btn-primary btn-sm"
+                            style="margin-left:5px;margin-top:-11px;margin-top: -5px;
+                            ">Disapprove</button>
+                          <ng-template #approve let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Approve Withdraw</h4>
+                              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Do you want to approve this withdraw request ?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" [disabled]="btnDis" (click)="changeStatus(list.withdraw_id,1,i)"
+                                class="btn btn-secondary">Yes</button>
+                              <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                            </div>
+                          </ng-template>
+                          <ng-template #disapprove let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Disapprove Withdraw Request</h4>
+                              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Do you want to disapprove this withdraw request ?</p>
+                              <span>
+                                <textarea maxlength="400" ngModel #creason="ngModel" name="creason_dis" type="text"
+                                  class="form-control m-t-10 m-b-10" placeholder="Please enter reason"
+                                  style="width:100%"></textarea>
+                              </span>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" [disabled]="btnDis"
+                                (click)="changeStatus(list.withdraw_id,0, creason.value,i)"
+                                class="btn btn-secondary">Yes</button>
+                              <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                            </div>
+                          </ng-template>
+                        </td>
+                      </tr>
+                      <tr *ngIf="userlists.length == 0">
+                        <td colspan="7">No withdraw request</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="pull-right m-t-10" *ngIf="userlists.length > 0">
+                  <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Fiat Withdraw" id='tabcrypto'>
+              <ng-template ngbTabContent>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <!-- <th>Sr.No</th> -->
+                        <th>Email</th>
+                        <th>User Id</th>
+                        <th>Name</th>
+                        <th>Balance</th>
+                        <!-- <th>Locked Balance</th> -->
+                        <th>Amount</th>
+                        <th>Order Id</th>
+                        <th>Fee</th>
+                        <th>Account</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let flist of fiatUserlists| paginate: { itemsPerPage: 10, currentPage: fiatpage ,totalItems:fiatTotalRecords};let i =index">
+                        <!-- <td>{{(i + 1) + (fiatpage * 10) - 10 }}</td> -->
+                        <td [title]='flist.email'>
+                          <!-- {{list.email}} -->
+                          {{flist.email != null && flist.email != ''?(flist.email | slice : 0 : 10
+                          )+".." :'-' }}
+                        </td>
+                        <td>
+                          {{flist.member_id}}
+                        </td>
+                        <td>
+                          {{flist.name}}
+                        </td>
+                        <td>
+                          {{flist.balance | withdrawreqExponent:2}}
+                        </td>
+                        <!-- <td>
+                          {{flist.locked_balance | withdrawreqExponent:2}}
+                        </td> -->
+                        <td>
+                          {{flist.amount | withdrawreqExponent:2}} ({{flist.currency_symbol | uppercase}})
+                        </td>
+                        <td>
+                          {{flist.refrence_number}}
+                        </td>
+                        <td>
+                          {{flist.tx_fee}}
+                        </td>
+                        <td>
+                          <span style="color: #0fc776; cursor: pointer;"
+                            (click)="viewBankDetail(flist.account_number, flist.member_id, flist.account_number_id)">{{flist.account_number}}</span>
+                        </td>
+                        <td>
+                          {{flist.created_at | date:'short'}}
+                        </td>
+                        <td>
+                          <button type="button" (click)="changeFiatApprove(approve, flist.account_number)"
+                            class="btn btn-primary  btn-sm" style="margin-left:5px;margin-bottom:10px">Approve</button>
+                          <button type="button" (click)="changeFiatApprove(disapprove, flist.account_number)"
+                            class="btn btn-primary btn-sm"
+                            style="margin-left:5px;margin-top:-11px; margin-top: -5px;">Disapprove</button>
+                          <ng-template #approve let-c="close" let-d="dismiss">
+                            <form #approveForm="ngForm" class="form-horizontal m-t-30"
+                              (ngSubmit)="approveWithdrawRequestStatus(approveForm,i)" style="margin: 0;">
+                              <div class="modal-header">
+                                <h4 class="modal-title">Approve Withdraw</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <p>Do you want to approve this withdraw request ?</p>
+
+                                <p>Enter Transaction ID ?</p>
+                                <input autocomplete="off" type="text" id="txn_id" name="txn_id" class="form-control"
+                                  required [(ngModel)]="txn_id" #tx_id="ngModel">
+                                <p class="text-danger" *ngIf="tx_id.touched && !tx_id.valid">
+                                  <span *ngIf="tx_id.errors.required"> Transaction Id Is Required</span>
+                                </p>
+                                <input autocomplete="off" type='hidden' id="withdraw_id" name="withdraw_id"
+                                  [(ngModel)]="flist.withdraw_id" #withd_id="ngModel">
+                                <!-- <div>
+                                  <button class="comn-btn filebtn">
+                                    Upload
+                                    <input type="file" (change)="uploadreceipt($event)" />
+                                  </button>
+                                </div> -->
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" [disabled]="approveForm.invalid"
+                                  class="btn btn-secondary">Yes</button>
+                                <!-- <button type="button" [disabled]="btnDis" (click)="changeStatus(flist.withdraw_id,1)" class="btn btn-secondary" >Yes</button> -->
+                                <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                              </div>
+                            </form>
+                          </ng-template>
+                          <ng-template #disapprove let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Disapprove Withdraw Request</h4>
+                              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Do you want to disapprove this withdraw request ?</p>
+                              <span>
+                                <textarea maxlength="400" ngModel #reason="ngModel" name="reason_dis" type="text"
+                                  class="form-control m-t-10 m-b-10" placeholder="Please enter reason"
+                                  style="width:100%"></textarea>
+                              </span>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" [disabled]="btnDis"
+                                (click)="disapproveFiatWithdrawReq(flist.withdraw_id, reason.value,i)"
+                                class="btn btn-secondary">Yes</button>
+                              <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                            </div>
+                          </ng-template>
+                        </td>
+                      </tr>
+                      <tr *ngIf="fiatUserlists.length == 0">
+                        <td colspan="7">No withdraw request</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="pull-right m-t-10" *ngIf="fiatUserlists.length > 0">
+                  <pagination-controls (pageChange)="fiatchangePage($event)"></pagination-controls>
+                </div>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+          <ngb-tabset *ngIf="tabsequence" (tabChange)="beforeChange($event)" #tabSet="ngbTabset" [activeId]="tab2">
+
+            <ngb-tab title="Fiat Withdraw" id='tabcrypto'>
+              <ng-template ngbTabContent>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <!-- <th>Sr.No</th> -->
+                        <th>Email</th>
+                        <th>User Id</th>
+                        <th>Name</th>
+                        <th>Balance</th>
+                        <!-- <th>Locked Balance</th> -->
+                        <th>Amount</th>
+                        <th>Order Id</th>
+                        <th>Fee</th>
+                        <th>Account</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let flist of fiatUserlists| paginate: { itemsPerPage: 10, currentPage: fiatpage ,totalItems:fiatTotalRecords};let i =index">
+                        <!-- <td>{{(i + 1) + (fiatpage * 10) - 10 }}</td> -->
+                        <td [title]=flist.email>
+
+                          {{flist.email != null && flist.email != ''?(flist.email | slice : 0 : 10
+                          )+".." :'-' }}
+
+                        </td>
+                        <td>
+                          {{flist.member_id}}
+                        </td>
+                        <td>
+                          {{flist.name}}
+                        </td>
+                        <td>
+                          {{flist.balance | withdrawreqExponent:2}}
+                        </td>
+                        <!-- <td>
+                          {{flist.locked_balance | withdrawreqExponent:2}}
+                        </td> -->
+                        <td>
+                          {{flist.amount | withdrawreqExponent:2}} ({{flist.currency_symbol | uppercase}})
+                        </td>
+                        <td>
+                          {{flist.refrence_number}}
+                        </td>
+                        <td>
+                          {{flist.tx_fee}}
+                        </td>
+                        <td>
+                          <span style="color: #0fc776; cursor: pointer;"
+                            (click)="viewBankDetail(flist.account_number, flist.member_id, flist.account_number_id)">{{flist.account_number}}</span>
+                        </td>
+                        <td>
+                          {{flist.created_at | date:'short'}}
+                        </td>
+                        <td>
+                          <button type="button" (click)="changeFiatApprove(approve, flist.account_number)"
+                            class="btn btn-primary  btn-sm" style="margin-left:5px;margin-bottom:10px">Approve</button>
+                          <button type="button" (click)="changeFiatApprove(disapprove, flist.account_number)"
+                            class="btn btn-primary btn-sm"
+                            style="margin-left:5px;margin-top:-11px; margin-top: -5px;">Disapprove</button>
+                          <ng-template #approve let-c="close" let-d="dismiss">
+                            <form #approveForm="ngForm" class="form-horizontal m-t-30"
+                              (ngSubmit)="approveWithdrawRequestStatus(approveForm,i)" style="margin: 0;">
+                              <div class="modal-header">
+                                <h4 class="modal-title">Approve Withdraw</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <p>Do you want to approve this withdraw request ?</p>
+
+                                <p>Enter Transaction ID ?</p>
+                                <input autocomplete="off" type="text" id="txn_id" name="txn_id" class="form-control"
+                                  required [(ngModel)]="txn_id" #tx_id="ngModel">
+                                <p class="text-danger" *ngIf="tx_id.touched && !tx_id.valid">
+                                  <span *ngIf="tx_id.errors.required"> Transaction Id Is Required</span>
+                                </p>
+                                <input autocomplete="off" type='hidden' id="withdraw_id" name="withdraw_id"
+                                  [(ngModel)]="flist.withdraw_id" #withd_id="ngModel">
+                                <!-- <div>
+                                  <button class="comn-btn filebtn">
+                                    Upload
+                                    <input type="file" (change)="uploadreceipt($event)" />
+                                  </button>
+                                </div> -->
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" [disabled]="approveForm.invalid"
+                                  class="btn btn-secondary">Yes</button>
+                                <!-- <button type="button" [disabled]="btnDis" (click)="changeStatus(flist.withdraw_id,1)" class="btn btn-secondary" >Yes</button> -->
+                                <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                              </div>
+                            </form>
+                          </ng-template>
+                          <ng-template #disapprove let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Disapprove Withdraw Request</h4>
+                              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Do you want to disapprove this withdraw request ?</p>
+                              <span>
+                                <textarea maxlength="400" ngModel #reason="ngModel" name="reason_dis" type="text"
+                                  class="form-control m-t-10 m-b-10" placeholder="Please enter reason"
+                                  style="width:100%"></textarea>
+                              </span>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" [disabled]="btnDis"
+                                (click)="disapproveFiatWithdrawReq(flist.withdraw_id, reason.value,i)"
+                                class="btn btn-secondary">Yes</button>
+                              <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                            </div>
+                          </ng-template>
+                        </td>
+                      </tr>
+                      <tr *ngIf="fiatempty">
+                        <td colspan="7">No withdraw request</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="pull-right m-t-10" *ngIf="!fiatempty">
+                  <pagination-controls (pageChange)="fiatchangePage($event)"></pagination-controls>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Crypto Withdraw" id='tabFiat'>
+              <ng-template ngbTabContent>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <!-- <th>Sr.No</th> -->
+                        <th>Email</th>
+                        <th>User Id </th>
+                        <th>Name</th>
+                        <th>Balance</th>
+                        <!-- <th>Locked Balance</th> -->
+                        <th>Amount</th>
+                        <th>Fee</th>
+                        <th>From address</th>
+                        <th>To address</th>
+
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let list of userlists| paginate: { itemsPerPage: 10, currentPage: page ,totalItems:totalRecords};let i =index">
+                        <!-- <td>{{(i + 1) + (page * 10) - 10 }}</td> -->
+                        <td [title]=list.email>
+
+                          {{list.email != null && list.email != ''?(list.email | slice : 0 : 10
+                          )+".." :'-' }}
+
+                        </td>
+                        <td>
+                          {{list.member_id }}
+                        </td>
+                        <td>
+                          {{list.name }}
+                        </td>
+                        <td>
+                          {{list.balance | withdrawreqExponent:8}}
+                        </td>
+                        <!-- <td>
+                          {{list.locked_balance | withdrawreqExponent:8}}
+                        </td> -->
+                        <td>
+                          {{list.amount | withdrawreqExponent:8}} ({{list.currency_symbol | uppercase}})
+                        </td>
+                        <td>
+                          {{list.tx_fee}}
+                        </td>
+                        <td title={{list.address_from}} style="cursor: pointer;"
+                          (click)='copyToClipboard(list.address_from)'>
+                          {{list.address_from != null && list.address_from != ''?(list.address_from | slice : 0 : 10
+                          )+".." :'-' }}
+                        </td>
+                        <td title={{list.address_to}} style="cursor: pointer;"
+                          (click)='copyToClipboard(list.address_to)'>
+                          {{list.address_to != null && list.address_to != ''?(list.address_to | slice : 0 : 10 )+'..' :
+                          '-'}}
+                        </td>
+                        <td>
+                          {{list.created_at | date:'short':'+0530'}}
+                        </td>
+                        <td>
+                          <button type="button" (click)="changeApprove(approve)" class="btn btn-primary  btn-sm"
+                            style="margin-left:5px;margin-bottom:10px">Approve</button>
+                          <button type="button" (click)="changeApprove(disapprove)" class="btn btn-primary btn-sm"
+                            style="margin-left:5px;margin-top:-11px; margin-top: -5px;">Disapprove</button>
+                          <ng-template #approve let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Approve Withdraw</h4>
+                              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Do you want to approve this withdraw request ?</p>
+
+
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" [disabled]="btnDis" (click)="changeStatus(list.withdraw_id,1,i)"
+                                class="btn btn-secondary">Yes</button>
+                              <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                            </div>
+                          </ng-template>
+                          <ng-template #disapprove let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Disapprove Withdraw Request</h4>
+                              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Do you want to disapprove this withdraw request ?</p>
+                              <span>
+                                <textarea maxlength="400" ngModel #creason="ngModel" name="creason_dis" type="text"
+                                  class="form-control m-t-10 m-b-10" placeholder="Please enter reason"
+                                  style="width:100%"></textarea>
+                              </span>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" [disabled]="btnDis"
+                                (click)="changeStatus(list.withdraw_id,0, creason.value,i)"
+                                class="btn btn-secondary">Yes</button>
+                              <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                            </div>
+                          </ng-template>
+                        </td>
+                      </tr>
+                      <tr *ngIf="empty">
+                        <td colspan="7">No withdraw request</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="pull-right m-t-10" *ngIf="!empty">
+                  <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                </div>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Account Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="bankDetailsUser">
+      <p><span>User Name:</span> {{fiatBankDetail.name}}</p>
+      <p><span>Email:</span> {{fiatBankDetail.email}}</p>
+      <p><span>Mobile Number:</span> {{fiatBankDetail. phone_code}}-{{fiatBankDetail. phone}}</p>
+
+
+      <p><span>Account Holder Name:</span> {{fiatBankDetail.name}}</p>
+      <p><span>Account Number:</span> {{fiatBankDetail.account_number}}</p>
+      <p><span>Bank Name:</span> {{fiatBankDetail.bank}}</p>
+      <p><span>Branch Name:</span> {{fiatBankDetail.branch_name}}</p>
+      <p><span>IFSC Code:</span> {{fiatBankDetail.ifsc_code}}</p>
+      <p><span>Bank Holder Address:</span> {{fiatBankDetail.address}}</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+
+  </div>
+</ng-template>

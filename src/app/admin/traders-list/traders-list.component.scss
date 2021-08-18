@@ -1,0 +1,63 @@
+.top_filters {
+    padding: 0px;
+    margin-bottom: 0px;
+    margin: 0px -10px;
+    li {
+        list-style-type: none;
+        width: calc(100% / 3);
+        margin-bottom: 10px;
+        float: left;
+        padding: 0px 10px;
+        label {
+            float: left;
+            width: 100%;
+            color: #666666;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        // button {
+        //     background-color: #e8b342;
+        //     color: #fff;
+        //     border-color:#e8b342;
+        //     box-shadow: none; 
+        // }
+        input {
+            font-size: 14px;
+        }
+        &:last-child {
+            margin-right: 0px;
+        }
+        // &.date {
+        //     max-width: 70%;
+        // }
+        .btn {
+            height: 38px;
+        }
+    }
+}
+
+.trade_filter_sec {
+    .col {
+        padding-left: 0px;
+        float: left;
+        width: 100%;
+        form {
+            float: left;
+            width: 100%;
+            .top_filters {
+                float: left;
+                width: 100%;
+                select {
+                    font-size: 14px;
+                }
+            }                
+        }
+    }
+}
+.btn-success{
+    background-color: #28a745;
+    border-color: #28a745;
+}
+.pointer {
+    cursor: pointer;
+}

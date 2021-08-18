@@ -1,0 +1,89 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div class="login-register" style="background-image:url(assets/images/background/login-register.jpg);">
+  <div class="login-box card">
+    <div class="card-body">
+      <form #loginf="ngForm" (ngSubmit)="login(loginf)" class="form-horizontal form-material" id="loginform"
+        [ngClass]="{'d-none': recoverform}">
+        <h3 class="box-title m-b-20">Sign In</h3>
+        <div class="form-group ">
+          <div class="col-xs-12">
+            <input autocomplete="off" class="form-control" type="email" [(ngModel)]="rememberEmail"
+              pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required ngModel name="email" #email="ngModel"
+              placeholder="Email" >
+
+            <p class="text-danger" *ngIf="email.touched && !email.valid">
+              <span *ngIf="email.errors.required">Email is required</span>
+              <span *ngIf="email.errors.pattern">Enter a valid email format</span>
+            </p>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-12">
+            <input autocomplete="off" [(ngModel)]="rememberPassword" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}"
+              class="form-control" type="password" required ngModel name="password" #password="ngModel"
+              placeholder="Password" autocomplete="new-password">
+            <p class="text-danger" *ngIf="password.touched && !password.valid">
+              <span *ngIf="password.errors.required">Password is required</span>
+              <!-- <span *ngIf = "password.errors.pattern" >Password should have one uppercase, one lowercase, one number, one special character, minimum 8 and maximum 15 characters.</span> -->
+            </p>
+
+          </div>
+        </div>
+        <!-- live -->
+
+        <div class="g-recaptcha" data-sitekey='6LcXj8YZAAAAACc5pc49uzEeSCas4VFtkpckCVgy'></div>
+        <!-- beta -->
+
+        <!-- <div class="g-recaptcha" data-sitekey='6LfbyJgUAAAAAOEYR8OApA7kq1FByX5gLAP5zTt6'></div> -->
+        <div class="form-group row">
+          <div class="col-md-12 font-14">
+            <div class="custom-control custom-checkbox">
+              <input autocomplete="off" [checked]="rememberMeee" [(ngModel)]="rememberMeee" type="checkbox" class="custom-control-input" id="customCheck1"   ngModel name="rememberMe" #rememberMe="ngModel">
+              <label class="custom-control-label" for="customCheck1">Remember me</label>
+              <!-- <a (click)="showRecoverForm()" href="javascript:void(0)" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a> -->
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center m-t-20">
+          <div class="col-xs-12">
+            <button [disabled]="!loginf.valid"
+              class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light">Login</button>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+            <!-- <div class="social">
+              <button class="btn btn-facebook m-r-10" placement="top" ngbTooltip="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </button>
+              <button class="btn btn-googleplus" placement="top" ngbTooltip="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </button>
+            </div> -->
+          </div>
+        </div>
+        <!-- <div class="form-group m-b-0">
+          <div class="col-sm-12 text-center">
+            <div>Don't have an account? <a class="text-info m-l-5" [routerLink]="['/authentication/signup']"><b>Sign Up</b></a></div>
+          </div>
+        </div> -->
+      </form>
+      <form class="form-horizontal" id="recoverform" [ngClass]="{'d-block': recoverform}">
+        <div class="form-group ">
+          <div class="col-xs-12">
+            <h3>Recover Password</h3>
+            <p class="text-muted">Enter your Email and instructions will be sent to you! </p>
+          </div>
+        </div>
+        <div class="form-group ">
+          <div class="col-xs-12">
+            <input autocomplete="off" class="form-control" type="text" required="" placeholder="Email"> </div>
+        </div>
+        <div class="form-group text-center m-t-20">
+          <div class="col-xs-12">
+            <a class="btn btn-primary btn-lg btn-block text-uppercase waves-effect waves-light"
+              [routerLink]="['/login']">Reset</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

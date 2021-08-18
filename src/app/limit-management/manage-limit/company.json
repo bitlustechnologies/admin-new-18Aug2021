@@ -1,0 +1,88 @@
+[
+    {
+        "currency": "BTC",
+        "minimum":"0.5000",
+        "maximum": "6.0000",
+        "option":"BUY",
+        "last": "30-03-2018"
+    },
+    {
+        "currency": "ETH",
+        "minimum":"0.2000",
+        "maximum": "5.0000",
+        "option":"BUY",
+        "last": "30-03-2018"
+    },
+    {
+        "currency": "XRP",
+        "minimumvalue":"0.2000",
+        "maximumvalue": "5.0000",
+        "option":"BUY",
+        "lastupdated": "30-03-2018"
+    },
+    {
+        "currency": "LTC",
+        "minimumvalue":"0.2000",
+        "maximumvalue": "5.0000",
+        "option":"BUY",
+        "lastupdated": "30-03-2018"
+    },
+    {
+        "currency": "BCH",
+        "minimumvalue":"0.2000",
+        "maximumvalue": "5.0000",
+        "option":"BUY",
+        "lastupdated": "30-03-2018"
+    },
+    {
+        "currency": "DASH",
+        "minimumvalue":"0.2000",
+        "maximumvalue": "5.0000",
+        "option":"BUY",
+        "lastupdated": "30-03-2018"
+    },
+    {
+        "currency": "OMG",
+        "minimumvalue":"0.2000",
+        "maximumvalue": "5.0000",
+        "option":"BUY",
+        "lastupdated": "30-03-2018"
+    },
+    {
+        "currency": "BTC",
+        "minimumvalue":"0.2000",
+        "maximumvalue": "5.0000",
+        "option":"BUY",
+        "lastupdated": "30-03-2018"
+    },
+    {
+        "currency": "BTC",
+        "minimumvalue":"0.2000",
+        "maximumvalue": "5.0000",
+        "option":"BUY",
+        "lastupdated": "30-03-2018"
+    },
+    {
+        "currency": "BTC",
+        "minimumvalue":"0.2000",
+        "maximumvalue": "5.0000",
+        "option":"BUY",
+        "lastupdated": "30-03-2018"
+    },
+    {
+        "currency": "BTC",
+        "minimumvalue":"0.2000",
+        "maximumvalue": "5.0000",
+        "option":"BUY",
+        "lastupdated": "30-03-2018"
+    },
+    {
+        "currency": "BTC",
+        "minimumvalue":"0.2000",
+        "maximumvalue": "5.0000",
+        "option":"BUY",
+        "lastupdated": "30-03-2018"
+    }
+
+  
+]

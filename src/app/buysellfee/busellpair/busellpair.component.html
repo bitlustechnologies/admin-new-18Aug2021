@@ -1,0 +1,227 @@
+<div class="row">
+  <div class="col-lg-12">
+    <select class="form-control custom-select" name="currency" (change)="onChange($event.target.value)" style="width: 20%; float: right;">
+      <option [value]="currency.currency_id" *ngFor="let currency of fiatCurrency">{{currency.currency_symbol | uppercase}}</option>
+    </select>
+  </div>
+  <div class="col-lg-12 curncy-section"  >
+    <div class="currency_block" *ngFor="let list of currencyPairsList">
+        <div>
+          <div class="currency_block_inner">                         
+            <div class="currency_actions">
+              <ul>
+                <li><label>{{list.buyFrom | uppercase}}</label>  </li>
+                <li>
+                  <ul>
+                    <li><i class="comn_currency_icon {{list.buyFrom}}"></i> </li>
+                    <li><i class="fa fa-arrows-h"></i></li>
+                    <li><i class="comn_currency_icon {{list.buyTo}}"></i></li>
+                  </ul> 
+                </li>
+                <li><label>{{list.buyTo | uppercase}}</label> </li>
+              </ul>
+            </div>      
+          </div>
+          <div class="set_limit_sec">
+            <button type="button" (click)=onEdit(list) class="btn btn-secondary">Set Fee</button>        
+          </div>
+          <div class="trade_limit">
+            <div class="trade_limit_blocks"> <label><strong>Buy:</strong></label><br />
+              <label>Trade Limit: {{list.buyOrderLimit}}</label><br />
+              <label>Trade Fee: {{list.buyFee}}</label>
+            </div>
+            <div class="trade_limit_blocks">
+              <label><strong>Sell:</strong></label><br />
+              <label>Trade Limit: {{list.sellOrderLimit}}</label><br />
+              <label>Trade Fee: {{list.sellFee}}</label>
+            </div>
+          </div>
+        </div>
+
+
+
+      <!-- <div *ngIf="list.pair_id==1">
+        <div class="currency_block_inner">                         
+          <div class="currency_actions">
+            <ul>
+              <li><label>ZAR</label>  </li>
+              <li>
+                <ul>
+                  <li>R </li>
+                  <li><i class="fa fa-arrows-h"></i></li>
+                  <li><i class="comn_currency_icon btc"></i></li>
+                </ul> 
+              </li>
+              <li><label>BTC </label> </li>
+            </ul>
+          </div>      
+        </div>
+        <div class="set_limit_sec">
+          <button type="button" (click)=onEdit(list) class="btn btn-secondary">Set Fee</button>        
+        </div>
+        <div class="trade_limit">
+          <div class="trade_limit_blocks"> <label><strong>Buy:</strong></label><br />
+            <label>Trade Limit: {{list.minTradeLimit}}</label><br />
+            <label>Trade Fee: {{list.buyTradeFee}}</label>
+          </div>
+          <div class="trade_limit_blocks">
+            <label><strong>Sell:</strong></label><br />
+            <label>Trade Limit: {{list.minTradeLimit}}</label><br />
+            <label>Trade Fee: {{list.sellTradeFee}}</label>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="list.pair_id==2">
+        <div class="currency_block_inner">                         
+          <div class="currency_actions">
+            <ul>
+              <li><label>ZAR</label>  </li>
+              <li>
+                <ul>
+                  <li>R </li>
+                  <li><i class="fa fa-arrows-h"></i></li>
+                  <li><i class="comn_currency_icon eth"></i></li>
+                </ul> 
+              </li>
+              <li><label>ETH </label> </li>
+            </ul>
+          </div>      
+        </div>
+        <div class="set_limit_sec">
+          <button type="button" (click)=onEdit(list)  class="btn btn-secondary">Set Fee</button>        
+        </div>
+        <div class="trade_limit">
+          <div class="trade_limit_blocks"> <label><strong>Buy:</strong></label><br />
+            <label>Trade Limit: {{list.minTradeLimit}}</label><br />
+            <label>Trade Fee: {{list.buyTradeFee}}</label>
+          </div>
+          <div class="trade_limit_blocks">
+            <label><strong>Sell:</strong></label><br />
+            <label>Trade Limit: {{list.minTradeLimit}}</label><br />
+            <label>Trade Fee: {{list.sellTradeFee}}</label>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="list.tarding_pair_id==4">
+        <div class="currency_block_inner">                          
+          <div class="currency_actions">
+            <ul>
+              <li><label>USD</label>  </li>
+              <li>
+                <ul>
+                  <li><i class="fa fa-usd"></i> </li>
+                  <li><i class="fa fa-arrows-h"></i></li>
+                  <li><i class="comn_currency_icon bch"></i></li>
+                </ul> 
+              </li>
+              <li><label>BCH </label> </li>
+            </ul>
+          </div>      
+        </div>
+        <div class="set_limit_sec">
+          <button type="button" (click)=onEdit(list) class="btn btn-secondary">Set Fee</button>        
+        </div>
+        <div class="trade_limit">
+          <div class="trade_limit_blocks"> <label><strong>Buy:</strong></label><br />
+            <label>Trade Limit: {{list.minTradeLimit}}</label><br />
+            <label>Trade Fee: {{list.buyTradeFee}}</label>
+          </div>
+          <div class="trade_limit_blocks">
+            <label><strong>Sell:</strong></label><br />
+            <label>Trade Limit: {{list.minTradeLimit}}</label><br />
+            <label>Trade Fee: {{list.sellTradeFee}}</label>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="list.tarding_pair_id==5">
+        <div class="currency_block_inner">                          
+          <div class="currency_actions">
+            <ul>
+              <li><label>USD</label>  </li>
+              <li>
+                <ul>
+                  <li><i class="fa fa-usd"></i> </li>
+                  <li><i class="fa fa-arrows-h"></i></li>
+                  <li><i class="comn_currency_icon xrp"></i></li>
+                </ul> 
+              </li>
+              <li><label>XRP </label> </li>
+            </ul>
+          </div>      
+        </div>
+        <div class="set_limit_sec">
+          <button type="button" (click)=onEdit(list) class="btn btn-secondary">Set Fee</button>        
+        </div>
+        <div class="trade_limit">
+          <div class="trade_limit_blocks"> <label><strong>Buy:</strong></label><br />
+            <label>Trade Limit: {{list.minTradeLimit}}</label><br />
+            <label>Trade Fee: {{list.buyTradeFee}}</label>
+          </div>
+          <div class="trade_limit_blocks">
+            <label><strong>Sell:</strong></label><br />
+            <label>Trade Limit: {{list.minTradeLimit}}</label><br />
+            <label>Trade Fee: {{list.sellTradeFee}}</label>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="list.tarding_pair_id==6">
+        <div class="currency_block_inner">                          
+          <div class="currency_actions">
+            <ul>
+              <li><label>USD</label>  </li>
+              <li>
+                <ul>
+                  <li><i class="fa fa-usd"></i> </li>
+                  <li><i class="fa fa-arrows-h"></i></li>
+                  <li><i class="comn_currency_icon ada"></i></li>
+                </ul> 
+              </li>
+              <li><label>ADA </label> </li>
+            </ul>
+          </div>      
+        </div>
+        <div class="set_limit_sec">
+          <button type="button" (click)=onEdit(list) class="btn btn-secondary">Set Fee</button>        
+        </div>
+        <div class="trade_limit">
+          <div class="trade_limit_blocks"> <label><strong>Buy:</strong></label><br />
+            <label>Trade Limit: {{list.minTradeLimit}}</label><br />
+            <label>Trade Fee: {{list.buyTradeFee}}</label>
+          </div>
+          <div class="trade_limit_blocks">
+            <label><strong>Sell:</strong></label><br />
+            <label>Trade Limit: {{list.minTradeLimit}}</label><br />
+            <label>Trade Fee: {{list.sellTradeFee}}</label>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+  
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Please Enter Password</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <input autocomplete="off" required class="form-control" #adminpassword="ngModel" [(ngModel)]="password" name="password" type="password" maxlength="20">
+        <div *ngIf="adminpassword.invalid && (adminpassword.dirty || adminpassword.touched)" class="alert alert-danger">
+          <div *ngIf="adminpassword.errors.required"> Password is required. </div>
+      </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="SubmitPassword()">Submit</button>
+  </div>
+</ng-template>
+    

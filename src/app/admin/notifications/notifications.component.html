@@ -1,0 +1,15 @@
+<div class="row ">
+  <div class="col-lg-12 col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <ul class="noti_page">
+          <li *ngFor="let item of NotificationData" (click)='notificationClicked(item.notification_id)'>
+            <p><span>{{item.title}}</span><span class="date">{{item.created_at | date :'short' }}</span></p>
+            <p>{{item.message}}</p>
+          </li>
+          <li *ngIf="NotificationData?.length ==0">No new notifications</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

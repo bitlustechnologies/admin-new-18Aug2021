@@ -1,0 +1,217 @@
+.currency_block {
+    margin-left: 8px;
+    width: calc(97% / 3);
+    float: left;
+    padding: 5px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    .currency_block_inner {
+        display: table;
+        width: 100%;
+        background: #fff;
+        padding: 10px;
+        border: solid 1px #ddd;
+        .currency_label {
+            display: table-cell;
+            vertical-align: middle;
+            float: none;
+            width: 50%;
+            padding: 0px 10px;
+            label {
+                margin-bottom: 0px;
+            }
+        }
+        .currency_actions {            
+            display: table-cell;
+            vertical-align: middle;
+            float: none;
+            width: 100%;
+            padding: 0px;
+            ul {
+                margin-bottom: 0px;
+                padding: 0px;
+                display: flex;
+                justify-content: space-between;
+                li {
+                    display: inline-block;
+                    margin-right: 10px;
+                    font-size: 15px;
+                    ul {
+                        margin-bottom: 0px;
+                        padding: 0px;
+                        li {
+                            display: inline-block;
+                            margin-right: 10px;
+                            text-align: center;
+                            &:last-child {
+                                margin-right: 0px;
+                            }
+                            i {
+                                &.comn_currency_icon {
+                                    width: 25px;
+                                    height: 25px;
+                                    display: inline-block;
+                                    background-image: url('../../../assets/images/currency_icons.png');
+                                    background-repeat: no-repeat;
+                                    margin-bottom: -5px;
+                                    &.btc {
+                                        background-position: 0 0;
+                                    }
+                                    &.eth {
+                                        background-position: -60px 0px;
+                                    }
+                                    &.ltc {
+                                        background-position: -119px 0px;
+                                    }
+                                    &.bch {
+                                        background-position: -33px 0px;
+                                    }
+                                    &.zar {
+                                        background-position: -90px 0px;
+                                    }
+                                    &.zch {
+                                        background-position: -157px 0px;
+                                    }
+                                    &.xrp {
+                                        background-position: -189px 0px;
+                                    }
+                                    &.xrp {
+                                        background-position: -189px 0px;
+                                    }
+                                    &.ada {
+                                        background-position: -223px 0px;
+                                    }
+                                    &.kes {
+                                        background-position: -258px 0px;
+                                    }                                    
+                                    &.usd {
+                                        background-position: -285px 0px;
+                                    }
+                                    &.eur {
+                                        background-position: -310px 0px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    i {
+                        color: #000000;
+                    }
+                    label {
+                        margin-bottom: 0px;
+                        color: #000000;
+                    }
+                    .mdi-currency-btc {
+                        border: solid 1px;
+                        border-radius: 100px;
+                        padding: 0px 2px;
+                        font-size: 16px;
+                    }
+                    .fa-arrows-h {
+                        font-size: 24px;
+                    }
+                    &:last-child {
+                        margin-right: 0px;
+                    }
+                }
+            }
+        }
+    }
+    .set_limit_sec {
+        float: left;
+        width: 100%;
+        background: #ddd;
+        padding: 10px;
+        display: table;
+        button {
+            margin: 0px;
+            background-color: #fff;
+            color: #999;
+            box-shadow: none;
+            transition: all ease 0.4s;
+            display: table-cell;
+            vertical-align: middle;
+            float: none;
+            padding: 4px 10px;
+            height: auto !important;
+            font-size: 14px;
+            border-radius: 0px;
+            border-color:#ccc;
+            &:hover, &:active, &:focus {
+                transition: all ease 0.4s;
+                background-color: #0fc776;
+                border-color: #0fc776;
+                color: #ffff;
+            }
+        }
+        .set_limit_info {
+            display: table-cell;
+            vertical-align: middle;
+            float: none;
+            text-align: right;
+            label {
+                margin-bottom: 0px;
+                font-size: 14px;
+            }
+        }
+    }
+    .trade_limit {
+        display: table;
+        width: 100%;
+        border: solid 1px #ddd;
+        background: #fff;
+        .trade_limit_blocks {
+            display: table-cell;
+            padding: 10px;
+            border-top: solid 1px rgba(0,0,0,0.1);
+            label { 
+                font-size: 14px;
+                margin-bottom: 0px;
+                strong {
+                    color: #333333;
+                }
+            }
+        }
+    }
+}
+img.ethereum {
+    width: 22px;
+    border: solid 1px #000;
+    border-radius: 100px;
+    padding: 2px;
+}
+.card {
+    background-color: transparent;
+}
+select {
+    background-color: #fff;
+}
+
+.card{
+    background: transparent;
+    .card-body{
+        padding: 0px;
+    }
+}
+.curncy-section{
+    margin-left: 5px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    .currency_block{
+        flex: 33.33333%;
+        max-width: 33.33333%;
+        width: 100%;
+        margin: 0;
+    }
+}
+.custom-select {
+    background-color: #fff;
+}
+.btn .btn-secondary{
+    background-color: #0fc776;
+    color: #fff;
+    border-color: #0fc776;
+    box-shadow: none;
+}

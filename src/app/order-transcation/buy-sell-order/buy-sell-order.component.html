@@ -1,0 +1,129 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div class="row">
+  <!-- column -->
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="trade_filter_sec">
+          <form #searchForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="FilterOrders(searchForm)">
+            <div class="col" style="margin-bottom: 30px;">
+              <ul class="top_filters">
+                <li>
+                  <label>Select Pair</label>
+                  <select class="form-control custom-select" name="pairId" style="width:100%" ngModel id="pair">
+                    <option value="">Select Pair</option>
+                    <option [value]="pair.buyFrom + '_' + pair.buyTo" *ngFor="let pair of currencyPairsList">
+                      {{pair.buyFrom | uppercase}}/{{pair.buyTo | uppercase}}</option>
+                  </select>
+                </li>
+                <li>
+                  <label>Select Type</label>
+                  <select class="form-control custom-select" name="orderType" style="width: 100%;" id="orderType"
+                    ngModel>
+                    <option value="">Select Type</option>
+                    <option value="all">All</option>
+                    <option value="buy">Buy</option>
+                    <option value="sell">Sell</option>
+                  </select>
+                </li>
+                <li>
+                  <label>Email</label>
+                  <input autocomplete="off" type="text" class="form-control" placeholder="Email" ngModel name="email"
+                    style="width: 100%;">
+                </li>
+                <li>
+                  <label>User Id</label>
+                  <input autocomplete="off" type="text" class="form-control" placeholder="User Id" ngModel
+                    name="member_id" style="width: 100%;">
+                </li>
+              </ul>
+              <ul class="top_filters" style="max-width: 36% !important">
+                <li class="date">
+                  <label>From</label>
+                  <input placeholder="FromDate" type="date" name="fromDate" class="form-control" [(ngModel)]="fromDate">
+                </li>
+                <li class="date">
+                  <label>To</label>
+                  <input autocomplete="off" placeholder="ToDate" type="date" name="toDate" class="form-control date"
+                    [(ngModel)]="toDate">
+                </li>
+                <li>
+                  <button type="submit" [disabled]="searchForm.invalid"
+                    class="btn btn-secondary btnFiltr">Search</button>
+                </li>
+              </ul>
+            </div>
+          </form>
+          <div class="col" style="margin-bottom: 10px;">
+            <a style="cursor:pointer" (click)="showAll(searchForm)"> Show All</a>
+            |
+            <a style="cursor:pointer" (click)="ExportCsv()"> <i class="mdi mdi-arrow-down-box pointer">
+              </i>Download
+              CSV file</a>
+            <label style="float: right;">Total Orders: {{totalRecords}}</label>
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User Id</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>State</th>
+              <th>Pair</th>
+              <th>Order Type</th>
+              <th>Buy Price</th>
+              <th>Total Value (INR)</th>
+              <th>Total Value (USD)</th>
+              <th>Fees</th>
+              <th>QTY</th>
+              <th>Date</th>
+              <th>Order Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let list of userlists | paginate: { itemsPerPage: 10, currentPage: page ,totalItems:totalRecords}">
+              <td>{{list.member_id}}</td>
+              <td style="cursor: pointer;" [routerLink]="['/admin/users-view/',list.member_id]">{{list.name}}</td>
+              <td title={{list.email}}>
+                {{list.email | slice:0:8}}..
+              </td>
+              <td>{{list.state}}</td>
+              <td>{{list.pairs}}</td>
+              <td>{{list.order_type}}</td>
+              <td>{{list.actual_price | orderExponent:2}}</td>
+              <td>{{list.total_price | orderExponent:2}}</td>
+              <td>{{list.curTotalPrice | orderExponent:2}}</td>
+              <td>{{list.fee | orderExponent:2}}</td>
+              <td>{{list.qty | orderExponent:4}}</td>
+              <td>{{list.created_at | date:'MMM d, y, h:mm:ss a'}}</td>
+              <td>
+                <ul class="deposit_action">
+                  <li *ngIf="list.order_status=='COMPLETED'"><input type="button" class="btnAccepted accept"></li>
+                  <li *ngIf="list.order_status=='PENDING' || list.order_status=='CANCELED'"><input type="button"
+                      class="btnAccepted decline"></li>
+                </ul>
+              </td>
+            </tr>
+            <tr *ngIf="empty">
+              <td colspan="3">Search result not found</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pull-right" *ngIf="!empty">
+          <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+          <!-- <label style="margin-right:10px;">
+            <input type="number" class="form-control form-control-sm" [value]="page"
+              (click)="goto($event)"  [min]="1" [max]="total"  style="display: inline-block;width: auto;"> of {{total}} pages
+          </label> -->
+
+          <!-- <div class="btn-group">
+            <button type="button" class="btn btn-prev" [ngClass]="page==1 ? 'btn-default' : 'btn-primary'" [disabled]="page==1" (click)="prev()">Prev</button>
+            <button type="button" class="btn btn-next" [ngClass]="page==total ? 'btn-default' : 'btn-primary'" [disabled]="page==total || total==1" (click)="next()">Next</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

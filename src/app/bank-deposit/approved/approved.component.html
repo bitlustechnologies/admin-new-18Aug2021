@@ -1,0 +1,131 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div class="row">
+  <!-- column -->
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="row" style="padding-top:12px; ">
+              <div class="col-lg-12">
+                <div class="col-md-6 pull-right">
+
+                  <input 
+                    placeholder="Search here"
+                    type="text" 
+                    class="form-control pull-right"
+                    ngModel
+                    #search="ngModel"
+                    (keyup)="searchData(search.value)"
+                    autocomplete="off"
+                    >
+                </div>
+              </div>
+
+            </div>
+          <div class="card-body">
+
+            <table class="table">
+                <thead>
+                  <tr>
+                    <!-- <th>Name</th> -->
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Submitted Date</th>
+                    <th>Approved Date</th>
+                   
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let list of userlists | paginate: { itemsPerPage: 10, currentPage: page ,totalItems:totalRecords}">
+                    <td>{{list.first_name}} {{list.middle_name}} {{list.last_name}}</td>
+                    <td>{{list.email}}</td>
+                    <td>
+                        <span *ngIf="list.kyc_submit_at">
+    
+                          {{list.kyc_submit_at | date:'dd/MM/yyyy'}}
+                        </span>
+                        <span *ngIf="!list.kyc_submit_at">
+                          -
+                        </span>
+                        </td>
+                        <td>
+                            <span *ngIf="list.kyc_approved_at">
+        
+                              {{list.kyc_approved_at | date:'dd/MM/yyyy'}}
+                            </span>
+                            <span *ngIf="!list.kyc_approved_at">
+                              -
+                            </span>
+                            </td>
+                    <!-- <ng-container *ngIf="list.kyc_status == null">
+                      <td>0</td>
+                    </ng-container> 
+                    <ng-container *ngIf="list.kyc_status != null">
+                        <td>{{list.kyc_status}}</td>
+                    </ng-container>  -->
+                   
+                    <!-- <td>
+                        <select (change)="changeStatus(list.member_id,prestype.value)"  required [(ngModel)]="list.kyc_status" #prestype ="ngModel" name="p_res_type" class="form-control" id="">
+                            <option [ngValue]="0">Unapproved</option>
+                            <option [ngValue]="1">Approved</option>
+
+                        </select> 
+
+                    </td> -->
+                
+                  </tr>
+
+                  <tr *ngIf="empty">
+                    <td colspan="3">Search result not found</td>
+                  </tr>
+              
+               
+                </tbody>
+
+
+
+              </table>
+
+
+              <div class="pull-right" *ngIf="!empty">
+                  <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                <!-- <label style="margin-right:10px;">
+                    <input type="number" class="form-control form-control-sm" [value]="page"
+                (click)="goto($event)"  [min]="1" [max]="total"  style="display: inline-block;width: auto;"> of {{total}} pages
+                </label>
+                
+                <div class="btn-group">
+                    <button type="button" class="btn btn-prev" [ngClass]="page==1 ? 'btn-default' : 'btn-primary'" [disabled]="page==1" (click)="prev()">Prev</button>
+                    <button type="button" class="btn btn-next" [ngClass]="page==total ? 'btn-default' : 'btn-primary'" [disabled]="page==total || total==1" (click)="next()">Next</button>
+                </div> -->
+             </div>
+    
+
+          </div>
+      </div>
+   
+  </div>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <!-- <h4 class="modal-title" id="modal-basic-title">Profile update</h4> -->
+      <button type="button" class="close" aria-label="Close" (click)="modalRef.close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <!-- <label for="dateOfBirth">Date of birth</label> -->
+          <div class="input-group">
+            
+            <h4>Do you really want to Delete?</h4>
+            <span style="width:100%">
+                <textarea maxlength="400" ngModel #reason ="ngModel" name="reason_dis" type="text" class="form-control m-t-10 m-b-10"  placeholder="Please enter reason" style="width:100%"></textarea>
+              </span> 
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="deleteKycUser(reason.value)">Yes</button>
+    </div>
+  </ng-template>

@@ -1,0 +1,115 @@
+<div class="row">
+    <!-- column -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="trade_filter_sec">
+                      <form #searchForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="FilterOrders(searchForm)">
+                     <div class="col" style="margin-bottom: 30px;">
+                         
+                           <ul class="top_filters">
+                            <li>
+                                <!-- <label>Select Pair</label> -->
+                                <select class="form-control custom-select" name="pairId" [(ngModel)]="orderSearchModel.pairId" style="width:74%">
+                                    <option value="">Select Pair</option>
+                                    <option value="zar_btc">ZAR/BTC</option>
+                                    <option value="zar_eth">ZAR/ETH</option>
+                                  </select>
+                            </li>
+                            <li style="margin-left: 32px;">
+                                <!-- <label>Select Status</label> -->
+                                <select class="form-control custom-select" name="orderStatus" [(ngModel)]="orderSearchModel.orderStatus" style="width: 74%;margin-left: -119px;">
+                                   <option value="">Select Status</option>
+                                   <option value="all">All</option>
+                                    <option value="open">Open</option>
+                                    <option value="cancelled">Cancelled</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="partial">Partial</option>
+                                  </select>
+                            </li>
+                            <li style="margin-left: -39px;">
+                                <!-- <label>Select Type</label> -->
+                                <select class="form-control custom-select" name="orderType" [(ngModel)]="orderSearchModel.orderType" style="width: 74%;margin-left: -167px;">
+                                 <option value="">Select Type</option> 
+                                  <option value="all">All</option>
+                                    <option value="buy">Buy</option>
+                                    <option value="sell">Sell</option>
+                                  </select>
+                            </li>
+                           
+                           </ul>   
+                     
+                       </div>
+                     <div class="col" style="margin-bottom: 30px;">
+                        <ul class="top_filters">
+                                <li class="date">
+                                <label>From</label>
+                                <input placeholder="FromDate" type="date" name="fromDate"  class="form-control"  [(ngModel)]="orderSearchModel.fromDate">
+                            </li>
+                            <li class="date">
+                                <label>To</label>
+                                <input placeholder="ToDate" type="date"  name="toDate"  class="form-control date" [(ngModel)]="orderSearchModel.toDate">
+                            </li>
+                            <li>
+                                <label>Email</label>
+                                <input autocomplete="off" type="text" class="form-control" name="email" [(ngModel)]="orderSearchModel.email">
+                            </li>
+                            <li>
+                                <label>&nbsp;</label>
+                                <button type="submit" [disabled]="searchForm.invalid" class="btn btn-secondary">Search</button>
+                            </li>
+                        </ul>      
+                       </div>
+                      </form>     
+                    <div class="col" style="margin-bottom: 10px;">
+                         <a style="cursor:pointer"  (click)="DownloadCSV()"> <i class="mdi mdi-arrow-down-box pointer"> </i>Download CSV file</a>
+                         <label style="float: right;">Total Orders: {{totalRecords}}</label>
+                       </div>
+                      <!-- <div> <label style="float: right;">Total Users: 11</label></div> -->
+                    
+                </div> 
+  
+                <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Order</th>
+                          <th>Date&Time</th>
+                          <th>Pair</th>
+                          <th>Email</th>
+                          <th>Value</th>
+                          <th>Price</th>
+                          <!-- <th>Fees</th> -->
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let list of ordersList | paginate: { itemsPerPage: 10, currentPage: pageNo ,totalItems:totalRecords}">
+                          <td>{{list.orders_type}} </td>
+                          <td>{{list.created_at | date: 'dd/MM/yyyy'}}</td>
+                          <td> {{list.pair}}</td>
+                          <td> {{list.email}}</td>
+                          <td> {{list.actual_units}}</td>
+                          <td> {{list.price}}</td>
+                          <!-- <td> {{list.fees}}</td> -->
+                          <td> {{ list.is_completed == 'YES' && list.is_partial == 'NO' && list.is_cancelled == 'NO' ? 'Completed' : 
+                            list.is_completed == 'NO' && list.is_partial == 'NO'&& list.is_cancelled == 'YES' ? 'Cancelled' : 
+                            list.is_completed == 'NO' && list.is_cancelled == 'NO' && list.is_partial == 'YES' ? 'Partial' : 'Open'
+                           }}</td>
+                        </tr>
+      
+                        <tr *ngIf="empty">
+                          <td colspan="3">No Record found</td>
+                        </tr>
+                      </tbody>
+      
+                    </table>
+                    <div class="pull-right" *ngIf="!empty">
+                        <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                     </div>
+                 
+            </div>
+        </div>
+    </div>
+  
+  </div>
+  

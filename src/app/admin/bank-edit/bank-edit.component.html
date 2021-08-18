@@ -1,0 +1,110 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-body">
+            <form #bankForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="editBank(bankForm)">
+                <!-- <div class="form-group">
+                  <label>Beneficiary Name</label><br />
+                  <input id="name" value="" name="name" class="form-control" required  [(ngModel)]="bankModel.name" #name="ngModel" style="width: 295px;" >
+                  <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger"  style="width: 295px;">
+                      <div *ngIf="name.errors.required">Name is required. </div> 
+                  </div>
+              </div> -->
+
+                <!-- <div class="form-group">
+                <label>Select Currency</label><br />
+                <select required class="form-control" [(ngModel)]="bankModel.currency_id" name="currency_id" #currency_id="ngModel"  id="currency_id" (change)="doSelectCurrency($event.target.value)" style="width: 295px;" disabled="disabled">
+                    <option value="">Please select currency</option>
+                    <option  *ngFor="let currency of fiatCurrency"  [value]="currency.currency_id">{{currency.currency_symbol | uppercase}}</option>
+                </select>
+                <div *ngIf="currency_id.invalid && (currency_id.dirty || currency_id.touched)" class="alert alert-danger"  style="width: 295px;">
+                    <div *ngIf="currency_id.errors.required">Currency is required. </div> 
+                </div>
+            </div> -->
+                <!-- <div class="form-group">
+                <div id="bank" style="display: inline-block; width: 100px; padding: 0 0 0 25px;">
+                    <input class="custom-control-input" id="typeRad" value="bank" #typeRad ="ngModel" [(ngModel)]="bankModel.pay_type" name="typeRad" type="radio" disabled>
+                    <label class="custom-control-label" for="typeRad">
+                       Bank
+                    </label>
+                </div>
+                <div *ngIf="selectedCurr == 'kes'" id="pesalink" style="display: inline-block; width: 100px; padding: 0 0 0 25px;">
+                    <input class="custom-control-input" id="typeRad1" value="pesalink" #typeRad1 ="ngModel" [(ngModel)]="bankModel.pay_type" name="typeRad" type="radio" disabled>
+                    <label class="custom-control-label" for="typeRad1">
+                        Pesalink
+                    </label>
+                </div>
+            </div> -->
+                <!-- <div class="form-group" *ngIf="bankModel.pay_type == 'pesalink'">
+                <label>Beneficiary Phone Number</label><br />
+                <input id="phone_number" value="" name="phone_number" class="form-control" required  [(ngModel)]="bankModel.phone_number" #phone_number="ngModel" style="width: 295px;" >
+                <div *ngIf="phone_number.invalid && (phone_number.dirty || phone_number.touched)" class="alert alert-danger"  style="width: 295px;">
+                    <div *ngIf="phone_number.errors.required">Phone number is required. </div>
+                </div>
+            </div> -->
+
+
+                <div class="form-group">
+                    <label>Account Number</label><br />
+                    <input id="account_number" value="" name="account_number" class="form-control" required
+                        [(ngModel)]="bankModel.account_number" #account_number="ngModel" style="width: 295px;">
+                    <div *ngIf="account_number.invalid && (account_number.dirty || account_number.touched)"
+                        class="alert alert-danger" style="width: 295px;">
+                        <div *ngIf="account_number.errors.required">Account number is required. </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Bank Name</label><br />
+                    <input id="bank_name" value="" name="bank_name" class="form-control" required
+                        [(ngModel)]="bankModel.bank_name" #bank_name="ngModel" style="width: 295px;">
+                    <div *ngIf="bank_name.invalid && (bank_name.dirty || bank_name.touched)" class="alert alert-danger"
+                        style="width: 295px;">
+                        <div *ngIf="bank_name.errors.required">Bank name is required. </div>
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                  <label>Beneficiary Bank Code</label><br />
+                  <input id="bank_code" value="" name="bank_code" class="form-control" required  [(ngModel)]="bankModel.bank_code" #bank_code="ngModel" style="width: 295px;" >
+                  <div *ngIf="bank_code.invalid && (bank_code.dirty || bank_code.touched)" class="alert alert-danger"  style="width: 295px;">
+                      <div *ngIf="bank_code.errors.required">Bank code is required. </div>
+                  </div>
+              </div> -->
+                <div class="form-group">
+                    <label>Branch Name</label><br />
+                    <input id="branch" value="" name="branch" class="form-control" required
+                        [(ngModel)]="bankModel.branch" #branch="ngModel" style="width: 295px;">
+                    <div *ngIf="branch.invalid && (branch.dirty || branch.touched)" class="alert alert-danger"
+                        style="width: 295px;">
+                        <div *ngIf="branch.errors.required">Branch name is required. </div>
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                  <label>Beneficiary Bank Branch Routing Code</label><br />
+                  <input id="routing_code" value="" name="routing_code" class="form-control" required  [(ngModel)]="bankModel.routing_code" #routing_code="ngModel" style="width: 295px;" >
+                  <div *ngIf="routing_code.invalid && (routing_code.dirty || routing_code.touched)" class="alert alert-danger"  style="width: 295px;">
+                      <div *ngIf="routing_code.errors.required">Routing code is required. </div>
+                  </div>
+              </div> -->
+                <!-- <div class="form-group">
+                  <label>Bank Routing Method</label><br />
+                  <input id="routing_method" value="" name="routing_method" class="form-control" required  [(ngModel)]="bankModel.routing_method" #routing_method="ngModel" style="width: 295px;" >
+                  <div *ngIf="routing_method.invalid && (routing_method.dirty || routing_method.touched)" class="alert alert-danger"  style="width: 295px;">
+                    <div *ngIf="routing_method.errors.required">Routing method is required. </div>
+                  </div>
+              </div> -->
+                <div class="form-group">
+                    <label> Bank ifsc Code</label><br />
+                    <input id="ifsc_code" value="" name="ifsc_code" class="form-control" required
+                        [(ngModel)]="bankModel.ifsc_code" #ifsc_code="ngModel" style="width: 295px;">
+                    <div *ngIf="ifsc_code.invalid && (ifsc_code.dirty || ifsc_code.touched)" class="alert alert-danger"
+                        style="width: 295px;">
+                        <div *ngIf="ifsc_code.errors.required">ifsc code is required. </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-danger" [disabled]="bankForm.invalid">Submit</button>
+                <button type="button" class="btn btn-inverse" [routerLink]="['/admin/banks']"
+                    style="margin-left:10px;">Back</button>
+            </form>
+        </div>
+    </div>
+</div>

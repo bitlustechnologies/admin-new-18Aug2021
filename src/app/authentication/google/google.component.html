@@ -1,0 +1,43 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<p-growl [(value)]="msgs"></p-growl>
+<div class="login-register" style="background-image:url(assets/images/background/login-register.jpg);">
+  <div class="login-box card">
+    <div class="card-body">
+      <form #f= "ngForm" (ngSubmit)="verify(f)" class="resetpwd_frm">        
+        <h3 class="box-title m-b-20">Google Authenticator</h3>
+        <div class="form-group ">
+          <div class="col-xs-12">
+            <input autocomplete="off" required ngModel minlength="2" name = "token"  #token ="ngModel" type="text" class="form-control" placeholder="Enter your token here" 
+                                    [(ngModel)]="googleAuth" maxlength="50">
+            <p class="text-danger" *ngIf="token.touched && !token.valid">
+              <span *ngIf = "token.errors.required" >Token is required</span>
+              <span *ngIf = "token.errors.minlength" >Minimum {{token.errors.minlength.requiredLength}}  chracter is required</span>
+            </p>
+          
+          </div>
+        </div>
+      
+        <div class="form-group text-center m-t-20">
+          <div class="col-xs-12">
+            <!-- <button [disabled]="!loginf.valid" class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light">Login</button>   -->
+            <button type="submit" [disabled] = "!f.valid" class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-ligh">Login</button>        
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+            <!-- <div class="social">
+              <button class="btn btn-facebook m-r-10" placement="top" ngbTooltip="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </button>
+              <button class="btn btn-googleplus" placement="top" ngbTooltip="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </button>
+            </div> -->
+          </div>
+        </div>
+        <!-- <div class="form-group m-b-0">
+          <div class="col-sm-12 text-center">
+            <div>Don't have an account? <a class="text-info m-l-5" [routerLink]="['/authentication/signup']"><b>Sign Up</b></a></div>
+          </div>
+        </div> -->
+      </form>
+   
+    </div>
+  </div>
+</div>

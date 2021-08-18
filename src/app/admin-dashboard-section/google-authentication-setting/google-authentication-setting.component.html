@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-sm-3">  
+    </div>
+    <div class="col-sm-6">
+        <div class="card card-body">
+            <form #userForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="EnableGoogleAuth(userForm)">
+               <div style="text-align: center"><img [src]="qrImage" /></div>
+                <div class="form-group">
+                    <label>Verify Token</label><br />
+                    <input id="verifyToken" name="verifyToken"  type="text" class="form-control" required  ngModel #verifyToken="ngModel" style="width: 100%;" autocomplete="off">
+                    <div *ngIf="verifyToken.invalid && (verifyToken.dirty || verifyToken.touched)" class="alert alert-danger">
+                        <div *ngIf="verifyToken.errors.required"> Token is required. </div>
+                    </div>
+                </div>
+           
+                <div class="form-group">
+                    <input readonly id="tokenText" name="tokenText"  type="text" class="form-control" required  [(ngModel)]="mykey" #newPassword="ngModel" style="width: 100%;">
+                </div>
+               
+                <div class="form-group row p-t-20">
+                    <div class="col-sm-12">
+                        <div class="custom-control custom-checkbox">
+                            <input #checkToken="ngModel" required type="checkbox" class="custom-control-input" name="checkToken" ngModel id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Make sure you have saved your key</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-danger" [disabled]="userForm.invalid || disableBtn">Update</button>
+                <button type="button" class="btn btn-inverse" [routerLink]="['/admin-dashboard-section/admin-profile']" style="margin-left:10px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-3">    
+    </div>
+</div>
+<!-- /.row -->
+<!-- Row -->

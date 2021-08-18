@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-body">
+            <form #editForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="UpdateUser(editForm)">
+                <!-- <div class="form-group">
+                    <label>Buy/Sell</label><br />
+                    <select class="form-control custom-select" style="width: 295px;"  name="orderType" [(ngModel)]="currencyPairEditModel.orderType" (change)="onChange($event.target.value)">
+                        <option value="BUY">Buy</option>
+                        <option value="SELL">Sell</option>
+                      </select>
+                </div> -->
+                <div class="form-group">
+                    <label>Min Trade Limit</label><br />
+                    <input autocomplete="off" id="minTradeLimit" name="minTradeLimit" class="form-control" required  [(ngModel)]="currencyPairEditModel.minTradeLimit" #minTradeLimit="ngModel" style="width: 295px;">
+                    <div *ngIf="minTradeLimit.invalid && (minTradeLimit.dirty || minTradeLimit.touched)" class="alert alert-danger" style="width: 295px;">
+                        <div *ngIf="minTradeLimit.errors.required"> Trade Limit is required. </div>
+                    </div>
+                </div>
+         
+                <div class="form-group">
+                    <label>Trade Fee</label><br />
+                    <input autocomplete="off" type="textbox" name="tradeFee" class="form-control" required  [(ngModel)]="currencyPairEditModel.tradeFee" #tradeFee="ngModel" appTwoDecimalDirective style="width: 295px;">
+                    <div *ngIf="tradeFee.invalid && (tradeFee.dirty || tradeFee.touched)" class="alert alert-danger" style="width: 295px;">
+                        <div *ngIf="tradeFee.errors.required"> Trade Limit is required. </div>
+                    </div>
+                </div>
+               <button type="submit" class="btn btn-danger" [disabled]="editForm.invalid">Update</button>
+                <button type="button" class="btn btn-inverse" [routerLink]="['/currency-management/currency-pairs']" style="margin-left:10px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+  </div>
+  <!-- /.row -->
+  <!-- Row -->
+  

@@ -1,0 +1,51 @@
+[
+    {
+        "currency":"BTC",
+        "funds_commitment": "10",
+        "hot_wallet_balance":"2",
+        "cold_wallet_balance":"5",
+        "delta":"-3"
+    },
+    {
+        "currency":"XRP",
+        "funds_commitment": "10",
+        "hot_wallet_balance":"2",
+        "cold_wallet_balance":"5",
+        "delta":"-3"
+    }
+    ,{
+        "currency":"BCH",
+        "funds_commitment": "10",
+        "hot_wallet_balance":"2",
+        "cold_wallet_balance":"5",
+        "delta":"+1"
+    }
+,    {
+        "currency":"ADA",
+        "funds_commitment": "10",
+        "hot_wallet_balance":"2",
+        "cold_wallet_balance":"5",
+        "delta":"+1"
+    },
+    {
+        "currency":"USD",
+        "funds_commitment": "10",
+        "hot_wallet_balance":"2",
+        "cold_wallet_balance":"5",
+        "delta":"+1"
+    },
+    {
+        "currency":"EURO",
+        "funds_commitment": "10",
+        "hot_wallet_balance":"2",
+        "cold_wallet_balance":"5",
+        "delta":"+1"
+    }, {
+        "currency":"KES",
+        "funds_commitment": "10",
+        "hot_wallet_balance":"2",
+        "cold_wallet_balance":"5",
+        "delta":"+1"
+    }
+    
+]

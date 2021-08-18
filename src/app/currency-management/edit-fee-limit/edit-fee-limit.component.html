@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-body">
+            <form #editForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="UpdateUser(editForm)">
+                <div class="form-group">
+                    <label>Min Withdraw Amount</label><br />
+                    <input autocomplete="off" id="minWithdrawAmount" name="minWithdrawAmount" class="form-control" required  [(ngModel)]="currencyManageEditModel.minWithdrawAmount" #minWithdrawAmount="ngModel"  style="width: 295px;">
+                    <div *ngIf="minWithdrawAmount.invalid && (minWithdrawAmount.dirty || minWithdrawAmount.touched)" class="alert alert-danger" style="width: 295px;">
+                        <div *ngIf="minWithdrawAmount.errors.required"> Min Withdraw Amount is required. </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Maximum withdrawal limit without KYC</label><br />
+                    <input autocomplete="off" id="withdrawLimitKyc" name="kyc_withd_without_limit" class="form-control" required  [(ngModel)]="currencyManageEditModel.withdrawLimitWithoutKyc" #withdrawLimitKyc="ngModel" style="width: 295px;">
+                    <div *ngIf="withdrawLimitKyc.invalid && (withdrawLimitKyc.dirty || withdrawLimitKyc.touched)" class="alert alert-danger" style="width: 295px;">
+                        <div *ngIf="withdrawLimitKyc.errors.required"> Withdrawl limit without Kyc is required. </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Maximum withdrawal limit with KYC</label><br />
+                    <input autocomplete="off" id="withdrawLimitKycwith" name="kyc_withd_limit" class="form-control" required  [(ngModel)]="currencyManageEditModel.withdrawLimitWithKyc" #withdrawLimitKycwith="ngModel" style="width: 295px;">
+                    <div *ngIf="withdrawLimitKycwith.invalid && (withdrawLimitKycwith.dirty || withdrawLimitKycwith.touched)" class="alert alert-danger" style="width: 295px;">
+                        <div *ngIf="withdrawLimitKycwith.errors.required"> Withdrawl limit with Kyc is required. </div>
+                    </div>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label>Withdrawl Limit With Kyc</label><br />
+                    <input id="withdrawLimitKyc" name="withdrawLimitKyc" class="form-control" required  [(ngModel)]="currencyManageEditModel.withdrawLimitKyc" #withdrawLimitKyc="ngModel" style="width: 295px;">
+                    <div *ngIf="withdrawLimitKyc.invalid && (withdrawLimitKyc.dirty || withdrawLimitKyc.touched)" class="alert alert-danger" style="width: 295px;">
+                        <div *ngIf="withdrawLimitKyc.errors.required"> Withdrawl Limit With Kyc is required. </div>
+                    </div>
+                </div> -->
+                <!-- <div class="form-group">
+                    <label>Max Withdrawl Without Kyc</label><br />
+                    <input id="maxWithdrawlWithoutKyc" name="maxWithdrawlWithoutKyc" class="form-control" required  [(ngModel)]="editUser.maxWithdrawlWithoutKyc" #maxWithdrawlWithoutKyc="ngModel" style="width: 295px;">
+                    <div *ngIf="maxWithdrawlWithoutKyc.invalid && (maxWithdrawlWithoutKyc.dirty || maxWithdrawlWithoutKyc.touched)" class="alert alert-danger" style="width: 295px;">
+                        <div *ngIf="maxWithdrawlWithoutKyc.errors.required"> Max Withdrawl Without Kyc is required. </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Gas Limit</label><br />
+                    <input id="gasLimit" name="gasLimit" class="form-control" required  [(ngModel)]="editUser.gasLimit" #gasLimit="ngModel" style="width: 295px;">
+                    <div *ngIf="gasLimit.invalid && (gasLimit.dirty || gasLimit.touched)" class="alert alert-danger" style="width: 295px;">
+                        <div *ngIf="gasLimit.errors.required">Gas Limit is required. </div>
+                    </div>
+                </div> -->
+                <div class="form-group">
+                        <label>Withdraw Fee</label><br />
+                        <input autocomplete="off" id="withdrawFee" name="withdrawFee" class="form-control" required  [(ngModel)]="currencyManageEditModel.withdrawFee" #withdrawFee="ngModel" style="width: 295px;">
+                        <div *ngIf="withdrawFee.invalid && (withdrawFee.dirty || withdrawFee.touched)" class="alert alert-danger" style="width: 295px;">
+                            <div *ngIf="withdrawFee.errors.required"> Withdraw Fee is required. </div>
+                        </div>
+                    </div>
+               <button type="submit" class="btn btn-danger" [disabled]="editForm.invalid">Update</button>
+                <button type="button" class="btn btn-inverse" [routerLink]="['/currency-management/currency-manage']" style="margin-left:10px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+  </div>
+  <!-- /.row -->
+  <!-- Row -->
+  

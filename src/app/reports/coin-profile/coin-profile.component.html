@@ -1,0 +1,60 @@
+<div class="row">
+    <!-- column -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <!-- <div class="col" style="margin-bottom: 30px;">
+                    <ul class="top_filters">
+                            <li class="date">
+                            <label>From</label>
+                            <input placeholder="FromDate" type="date" name="fromDate"  class="form-control"  [(ngModel)]="coinProfileSearchModel.fromDate">
+                        </li>
+                        <li class="date">
+                            <label>To</label>
+                            <input placeholder="ToDate" type="date"  name="toDate"  class="form-control date" [(ngModel)]="coinProfileSearchModel.toDate">
+                        </li>
+                        <li>
+                            <label>&nbsp;</label>
+                            <button type="button" (click)="GetSearch()" class="btn btn-secondary">Search</button>
+                        </li>
+                    </ul>      
+                </div> -->
+              <div class="col" style="margin-bottom: 10px;">
+                <a  style="cursor:pointer"  (click)="DownloadCSV()"> <i class="mdi mdi-arrow-down-box pointer"> </i>Download CSV file</a>
+                 </div>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Coin</th>
+                            <th>Deposit</th>
+                            <th>Withdrawal</th>
+                            <th>Balance</th>
+                            <th>Locked</th>
+                            <th>Total Trade</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let list of coinProfileList">
+                            <td>{{list.currency_symbol | uppercase}} </td>
+                            <td>{{list.deposits}}</td>
+                            <td> {{list.withdraws}}</td>
+                            <td> {{list.balance}}</td>
+                            <td> {{list.locked_balance}}</td>
+                            <td> {{list.totalTrades}}</td>
+                          </tr>
+        
+                          <tr *ngIf="empty">
+                            <td colspan="3">No Record found</td>
+                          </tr>
+                        </tbody>
+        
+                      </table>
+                      <!-- <div class="pull-right" *ngIf="!empty">
+                          <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+                       </div> -->
+             </div>
+         </div>
+     </div>
+  
+ </div>
+  

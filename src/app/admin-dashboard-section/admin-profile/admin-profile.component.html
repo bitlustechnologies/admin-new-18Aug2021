@@ -1,0 +1,81 @@
+<div class="row">
+    <!-- Column -->
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="m-t-30 text-center">
+                    <label class="custom-file">
+                        <input name = "profile_photo"  type="file" (change)="upload_profile($event)" ng2FileSelect [uploader]="uploader"  class="custom-file-input">
+                        <span class="custom-file-control"></span>
+                        <img style="cursor: pointer; height: 150px;" [src]="url"  class="img-circle" width="150" />
+                    </label>
+                     
+                    <h4 style="margin-top: 67px;"class="card-title m-t-10">{{userInfo.first_name}} {{userInfo.last_name}}</h4>
+                </div>
+            </div>
+            <div>
+                <hr> </div>
+            <div class="card-body"> <small class="text-muted">Email address </small>
+                <h6>{{userInfo.email}}</h6> <small *ngIf="phoneNo !=''" class="text-muted p-t-30 db">Phone</small>
+                <h6 *ngIf="phoneNo !=''">{{phoneNo}}</h6>
+               
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                         <strong  class="text-muted">Change Password</strong>
+                         <br />
+                         <h6>This password is required for login, Never give your password away.</h6>
+                      </div>
+                      <div class="col-md-6">
+                        <button [routerLink]="['/admin-dashboard-section/change-password']" style="width: 119px;
+                        height: 28px;float: right;margin-top: 19px;">Change</button>
+                        </div>
+                </div>
+                <hr>
+                <div class="row" *ngIf="google2fa == 0">
+                    <div class="col-md-6">
+                        <strong  class="text-muted">Google Authentication</strong>
+                        <br />
+                            <h6> Used for withdrawals and security modifications</h6>
+                        </div>
+                    <div class="col-md-6">
+                        <button  [routerLink]="['/admin-dashboard-section/google-authentication-setting']"  style="width: 119px;
+                        height: 28px;float: right;margin-top: 19px;">Enable</button>
+                    </div>
+                </div>
+                <div class="row" *ngIf="google2fa == 1">
+                    <div class="col-md-6">
+                        <strong  class="text-muted">Google Authentication</strong>
+                        <br />
+                            <h6> Used for withdrawals and security modifications</h6>
+                        </div>
+                    <div class="col-md-6">
+                        <button  [routerLink]="['/admin-dashboard-section/google-authentication-disable']"  style="width: 119px;
+                        height: 28px;float: right;margin-top: 19px;">Disable</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong  class="text-muted">Set Default Currency</strong>
+                        <br />
+                        <h6>This is default currency for admin.</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-control custom-select" name="currency" [(ngModel)]="defaultCurrency" (change)="setCurrency($event.target.value)" style="width: 39%; float: right;">
+                            <option [value]="currency.currency_id" *ngFor="let currency of fiatCurrency">{{currency.currency_symbol | uppercase}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>

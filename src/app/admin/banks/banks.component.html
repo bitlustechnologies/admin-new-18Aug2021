@@ -1,0 +1,133 @@
+<div class="row">
+  <!-- column -->
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <div *ngIf="total_bank < 3 && type == 'bank'"> -->
+        <div>
+          <div class="col" style="margin-bottom: 30px;">
+            <button type="button" class="btn btn-secondary" style="height: 36px;width: 97px;"
+              [routerLink]="['/admin/bank_add']"> Add New </button>
+          </div>
+          <div class="col" style="margin-bottom: 10px;">
+          </div>
+        </div>
+        <!-- <div *ngIf="total_pesa < 3 && type == 'pesalink'">
+          <div class="col" style="margin-bottom: 30px;">
+            <button type="button" class="btn btn-secondary" style="height: 36px;width: 97px;" [routerLink]="['/admin/pesa-add']"> Add New </button>
+          </div>
+          <div class="col" style="margin-bottom: 10px;">
+          </div>
+        </div>  -->
+
+        <!-- <ngb-tabset (tabChange)="selectTab($event)"> -->
+        <!-- <ngb-tabset>
+          <ngb-tab title="" id="bank"> -->
+        <!-- <ng-template ngbTabContent> -->
+        <table class="table">
+          <thead>
+            <tr>
+              <!-- <th>Default</th> -->
+              <th>Sr No.</th>
+              <th>Bank Name</th>
+              <th>Branch Name</th>
+              <!-- <th>Currency</th> -->
+              <!-- <th>Type</th> -->
+              <th>Account Number</th>
+              <!-- <th>Phone Number</th> -->
+              <th style="padding-left:96px;">Action</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="!empty">
+            <tr *ngFor="let list of bankList; let i =index">
+              <!-- <td><p-radioButton name="defaultBank" value="{{list.bank_id}}" [(ngModel)]="defaultBank" (click)="setDefault(list.bank_id, 'bank')"></p-radioButton></td> -->
+              <td>{{ (i + 1) }}</td>
+              <td> {{list.bank_name}}</td>
+              <td>{{list.bank_branch}}</td>
+              <!-- <td> {{list.currency_symbol | uppercase}}</td>
+                    <td> {{list.type | uppercase}}</td> -->
+              <td> {{list.account_number}}</td>
+              <!-- <td> {{list.phone_number}}</td> -->
+              <td>
+                <a [routerLink]="['/admin/bank_edit/',list.bank_id]"> <i class="mdi mdi-grease-pencil"> </i></a>|
+                <a target="_blank" (click)="open2(deletebank)"> <i style="color: #c51818;" class="fa fa-trash-o">
+                  </i></a>
+              </td>
+              <ng-template #deletebank let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <h4 class="modal-title">Delete Bank</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Do you want to delete bank?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" style="cursor: pointer" (click)="deleteBank(list.bank_id)"
+                    class="btn btn-secondary">Yes</button>
+                  <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                </div>
+              </ng-template>
+            </tr>
+          </tbody>
+          <tbody *ngIf="empty">
+            <tr>
+              <td colspan="3">No Record found</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- </ng-template> -->
+        <!-- </ngb-tab> -->
+        <!-- <ngb-tab title="Pesalink" id="pesalink">
+            <ng-template ngbTabContent>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Default</th>
+                    <th>Sr No.</th>
+                    <th>Account Number</th>
+                    <th>Phone Number</th>
+                    <th style="padding-left:96px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody  *ngIf="!empty">
+                  <tr *ngFor="let list of pesaList; let i =index">
+                    <td><p-radioButton name="defaultPesa" value="{{list.bank_id}}" [(ngModel)]="defaultPesa" (click)="setDefault(list.bank_id, 'pesalink')"></p-radioButton></td>
+                    <td>{{ (i + 1) }}</td>
+                    <td> {{list.account_number}}</td>
+                    <td> {{list.phone_number}}</td>
+                    <td>
+                      <a [routerLink]="['/admin/pesa-edit/',list.bank_id]"> <i class="mdi mdi-grease-pencil"> </i></a>|
+                      <a target="_blank" (click)="open2(deletepesa)"> <i style="color: #c51818;" class="fa fa-trash-o"> </i></a>
+                    </td>
+                    <ng-template #deletepesa let-c="close" let-d="dismiss">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Delete Pesalink</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Do you want to delete pesalink?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" style="cursor: pointer" (click)="deletePesalink(list.bank_id)" class="btn btn-secondary" >Yes</button>
+                        <button type="button" class="btn btn-secondary" (click)="c('Close click')">No</button>
+                      </div>
+                    </ng-template>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="empty">
+                  <tr >
+                    <td colspan="3">No Record found</td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-template>
+          </ngb-tab> -->
+        <!-- </ngb-tabset> -->
+      </div>
+    </div>
+  </div>
+</div>

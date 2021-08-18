@@ -1,0 +1,80 @@
+<!-- <p-growl [(value)]="msgs"></p-growl> -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card card-body">
+      <form #editForm="ngForm" class="form-horizontal m-t-30" (ngSubmit)="updateBankDetail(editForm)">
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Account Number</label><br />
+              <input id="accountNumber" minlength="10" maxlength="16" pattern="[0-9]+$" name="accountNumber" class="form-control" required
+                [(ngModel)]="account_number" #accountnumber= 'ngModel' autocomplete="off">
+                <div *ngIf="accountnumber.touched || accountnumber.errors" class="text-danger">
+                  <p *ngIf="accountnumber.errors?.required">Account number  is a required field!</p>
+                  <p *ngIf="accountnumber.errors?.minlength">Minlength should be 10 characters</p>
+                  <p *ngIf="!accountnumber.errors?.minlength && accountnumber.errors?.pattern">Only numeric characters allowed</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="form-group">
+              <label>Bank Name</label><br />
+              <input id="bank" name="bank" class="form-control" #bankname='ngModel' required [(ngModel)]="bank_name" autocomplete="off">
+              <div *ngIf="bankname.touched || bankname.errors" class="text-danger">
+                <p *ngIf="bankname.errors?.required">Bank name  is a required field!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Branch Name</label><br />
+              <input id="branch_name" minlength="2" maxlength="50" name="branch_name" class="form-control" required
+                [(ngModel)]="branch_name" #branchname ='ngModel' autocomplete="off">
+                <div *ngIf="branchname.touched || branchname.errors" class="text-danger">
+                  <p *ngIf="branchname.errors?.required">Branch name is a required field!</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="form-group">
+              <label>IFSC Code</label><br />
+              <input id="ifsc_code" name="ifsc_code" class="form-control" required [(ngModel)]="ifsc_code"
+                autocomplete="off" #ifsccode ='ngModel'>
+                <div *ngIf="ifsccode.touched || ifsccode.errors" class="text-danger">
+                  <p *ngIf="ifsccode.errors?.required">Ifsc code is a required field!</p>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="form-group">
+              <label>Account Type</label>
+              <select style="font-size: 11px;" class="form-control custom-select" [value] = 'accountType' (change)="selectedType($event.target.value)"
+                name="accountType" [(ngModel)]="accountType">
+                <option selected value="Savings Account">Saving Account</option>
+                <option value="Current Account">Current Account</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label style="display: block;">Cancelled Cheque/Passbook Front Page</label>
+              <a [href]="passBookPhoto" target="_blank">
+                <img style="width: 270px" height="200px" [src]="passBookPhoto" alt="">
+              </a>
+            </div>
+           
+          </div>
+        </div>
+        <button type="submit" class="btn btn-danger" [disabled]='!editForm.valid'>Update</button>
+        <button type="button" class="btn btn-inverse" [routerLink]="['/admin/user-bank']"
+          style="margin-left:10px;">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
+
